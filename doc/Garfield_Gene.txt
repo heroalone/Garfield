@@ -1,0 +1,74 @@
+=pod
+
+=head1 NAME
+
+Garfield - Genetic Association by Random Forest and InterpretivE Logic Decisions, helps to identify genetic heterogeneity and various interaction effcts.
+
+=head1 SYNOPSIS
+
+Garfield <subcommand> [options]
+
+=head1 COMMON OPTIONS
+
+=over 8
+
+=item B<--genotype|-g> <file>
+
+Specify the genotype file in binary PLINK format. [file.bed file.bim file.fam]
+
+=item B<--trait|-t> <file>
+
+Specify the phenotype file in PLINK format. [fid iid value]
+
+=item B<--outdir|-o> <string>
+
+Specify the directory of outputs. [default: ./]
+
+=item B<--prefix|-p> <string>
+
+Specify the prefix of output pseudo-genotypes. [default: genotype_phenotype_subcommand]
+
+=item B<--temporary|-tmp> <string>
+
+Specify the temporary directory for intermediate processing. [default: ./tmp]
+
+=item B<--threads|-@>
+
+Specify the threads that can be used. [default: 1]
+
+=item B<--help|-h>
+
+Show this help message.
+
+=back
+
+=head1 SUBCOMMANDS
+
+=over 8
+
+=item B<Gene>
+
+Run Garfield based on Genes and an extended flanking interval.
+
+=back
+
+=head1 SPECIFIC OPTIONS FOR SUBCOMMAND: Gene
+
+=over 8
+
+=item B<--bed|-b [required]>
+
+.bed file with coordinates and gene names, with the first four columns as [chrom start end gene_id]
+
+=item B<--extension|-e [optional]>
+
+Extension of intervals for each flanking of gene. [Default: 50000]
+
+=back
+
+=head1 EXAMPLES
+
+Run Garfield by Gene:
+  Garfield Gene --genotype input --trait trait --output output --temporary ./tmp --prefix gene.trait.test --threads 2 --bed gene.bed --extension 20000
+
+=cut
