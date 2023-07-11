@@ -21,8 +21,15 @@ sub common_argument {
 		$exit_code++;
 	} else {
 		$tmp_geno=$opts_sub->{"genotype_file"};
-		if (!-e $opts_sub->{"genotype_file"}) {
-			print "genotype file: $opts_sub->{genotype_file} does not exist. Please check!\n";
+		
+		if (!-e "$tmp_geno\.bed") {
+			print "genotype file: $tmp_geno.bed does not exist. Please check!\n";
+			$exit_code++;
+		}elsif (!-e "$tmp_geno\.bim") {
+			print "genotype file: $tmp_geno.bim does not exist. Please check!\n";
+			$exit_code++;
+		}elsif (!-e "$tmp_geno\.fam") {
+			print "genotype file: $tmp_geno.fam does not exist. Please check!\n";
 			$exit_code++;
 		}
 		$opts_sub->{"genotype_file"} = abs_path $opts_sub->{"genotype_file"};
