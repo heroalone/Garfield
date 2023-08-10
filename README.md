@@ -1,18 +1,21 @@
-# Garfield
-Short description
-<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="200" height="200">
+
+<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="400" height="400">
+
+# Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions, helps to identify genetic heterogeneity and various interaction effects.
+
+## Full documentation at: https://Garfield.readthedocs.io/ 
 
 ## Table of Contents
 =================
 
-- [Overview <a name="user\-content\-workflow"></a>](#project-overview)
-- [Installation <a name="user\-content\-install"></a>](#installation)
+- [Overview <a name="user\-content\-workflow"></a>](#overview)
+- [Installation <a name="user\-content\-install"></a>](#install)
 - [Usage](#usage)
-- [Contributing](#contributing)
+- [Contributing](#contribute)
 - [License](#license)
 - [Contact](#contact)
 
-## Project Overview <a name="workflow"></a>
+## Project Overview <a name="overview"></a>
 
 Garfield - Genetic Association by Random Forest and InterpretivE Logic Decisions, helps to identify genetic heterogeneity and various interaction effects.
 
@@ -36,7 +39,7 @@ Download the lastest version:
 2. R packages
     ```
 
-## Preparation of input files <a name="input"></a>
+## Preparation of input files <a name="usage"></a>
 
 ## Usage by examples
 ```bash
@@ -105,13 +108,13 @@ genotype：no-missing
 A paper describing the current study is under preparation.
 
 
-## Warranty and License
+## Warranty and License  <a name="license"></a>
 YOU ACKNOWLEDGE AND AGREE THAT THE SOFTWARE IS PROVIDED TO YOU ON AN "AS IS" BASIS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. 
 GARFIELD IS RELEASED UNDER THE GPLV3, WHICH IS PROVIDED IN A SEPARATE LICENSE FILE. BRIEFLY, IT ALLOWS USERS TO LEGALLY COPY, DISTRIBUTE, AND MODIFY. HOWEVER, ANY DISTRIBUTION OF DERIVATIVE CODE MUST ALSO BE OPEN SOURCE AND ABIDE BY THE SAME GPLV3 AGREEMENT.
 
-## Contributing
+## Contributing <a name="contribute"></a>
 If you have bugs, feature requests, please report the issues here: (https://github.com/heroalone/Garfield/issues).
 
 
-## Contact
+## Contact  <a name="contact"></a>
 Dr. Haijun Liu (haijun.liu[at]gmi.oeaw.ac.at).
