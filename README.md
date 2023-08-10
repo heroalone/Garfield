@@ -1,5 +1,5 @@
 
-<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="400" height="400">
+<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="222" height="222">
 
 # Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions, helps to identify genetic heterogeneity and various interaction effects.
 
@@ -109,12 +109,12 @@ A paper describing the current study is under preparation.
 
 
 ## Warranty and License  <a name="license"></a>
-YOU ACKNOWLEDGE AND AGREE THAT THE SOFTWARE IS PROVIDED TO YOU ON AN "AS IS" BASIS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. 
-GARFIELD IS RELEASED UNDER THE GPLV3, WHICH IS PROVIDED IN A SEPARATE LICENSE FILE. BRIEFLY, IT ALLOWS USERS TO LEGALLY COPY, DISTRIBUTE, AND MODIFY. HOWEVER, ANY DISTRIBUTION OF DERIVATIVE CODE MUST ALSO BE OPEN SOURCE AND ABIDE BY THE SAME GPLV3 AGREEMENT.
+You acknowledge and agree that the software is provided to you on an "as is" basis, without warranty of any kind, express or implied.
+
+Garfield is released under the GPLv3, which is provided in a separate license file. Briefly, it allows users to legally copy, distribute, and modify. However, any distribution of derivative code must also be open source and abide by the same GPLv3 agreement..
 
 ## Contributing <a name="contribute"></a>
 If you have bugs, feature requests, please report the issues here: (https://github.com/heroalone/Garfield/issues).
 
-
-## Contact  <a name="contact"></a>
+Or contact: <a name="contact"></a>
 Dr. Haijun Liu (haijun.liu[at]gmi.oeaw.ac.at).
