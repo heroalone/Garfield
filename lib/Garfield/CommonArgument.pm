@@ -33,18 +33,22 @@ sub common_argument {
 			$exit_code++;
 		}
 		$opts_sub->{"genotype_file"} = abs_path $opts_sub->{"genotype_file"};
+		print "Genotype file is: $opts_sub->{genotype_file}\n" if $exit_code == 0;
 	}
-
-	if (!$opts_sub->{"trait_file"}) {
-		print "Please provide --trait file!\n";
-		$exit_code++;
-	} else {
-		$tmp_pheno=$opts_sub->{"trait_file"};
-		if (!-e $opts_sub->{"trait_file"}) {
-			print "phenotype file: $opts_sub->{trait_file} does not exist. Please check!\n";
+	
+	if (not $sub_cmd=~/Ghost/){
+		if (!$opts_sub->{"trait_file"}) {
+			print "Please provide --trait file!\n";
 			$exit_code++;
+		} else {
+			$tmp_pheno=$opts_sub->{"trait_file"};
+			if (!-e $opts_sub->{"trait_file"}) {
+				print "phenotype file: $opts_sub->{trait_file} does not exist. Please check!\n";
+				$exit_code++;
+			}
+			$opts_sub->{"trait_file"} = abs_path $opts_sub->{"trait_file"};
+			print "Trait file is: $opts_sub->{trait_file}\n" if $exit_code == 0;
 		}
-		$opts_sub->{"trait_file"} = abs_path $opts_sub->{"trait_file"};
 	}
 	
 	#####################
@@ -100,6 +104,7 @@ sub common_argument {
 	if (!$opts_sub->{"threads"}) {
 		$opts_sub->{"threads"} = 1;
 	}
+	
 	return $exit_code;
 }
 
