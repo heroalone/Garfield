@@ -1,9 +1,10 @@
 
-<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="222" height="222">
+<div style="display: flex; align-items: center;">
+    <img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="222" height="222" style="margin-right: 20px;">
+    <h1 style="flex: 1;">Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions</h1>
+</div>
 
-# Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions, helps to identify genetic heterogeneity and various interaction effects.
-
-## Full documentation at: https://Garfield.readthedocs.io/ 
+### Full documentation at: https://Garfield.readthedocs.io/ 
 
 ## Table of Contents
 =================
@@ -109,7 +110,7 @@ A paper describing the current study is under preparation.
 
 
 ## Warranty and License  <a name="license"></a>
-You acknowledge and agree that the software is provided to you on an "as is" basis, without warranty of any kind, express or implied.
+You acknowledge and agree that the software is provided to you on an "AS IS" basis, without warranty of any kind, express or implied.
 
 Garfield is released under the GPLv3, which is provided in a separate license file. Briefly, it allows users to legally copy, distribute, and modify. However, any distribution of derivative code must also be open source and abide by the same GPLv3 agreement..
 
