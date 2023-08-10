@@ -1,0 +1,82 @@
+=pod
+
+=head1 NAME
+
+Garfield - Genetic Association by Random Forest and InterpretivE Logic Decisions, helps to identify genetic heterogeneity and various interaction effcts.
+
+=head1 SYNOPSIS
+
+Garfield <subcommand> [options]
+
+=head1 COMMON OPTIONS
+
+=over 8
+
+=item B<--genotype|-g> <file>
+
+Specify the genotype file in binary PLINK format. [file.bed file.bim file.fam]
+
+=item B<--trait|-t> <file>
+
+Specify the phenotype file in PLINK format. [fid iid value]
+
+=item B<--outdir|-o> <string>
+
+Specify the directory of outputs. [default: ./]
+
+=item B<--prefix|-p> <string>
+
+Specify the prefix of output pseudo-genotypes. [default: genotype_phenotype_subcommand]
+
+=item B<--temporary|-tmp> <string>
+
+Specify the temporary directory for intermediate processing. [default: ./tmp]
+
+=item B<--threads|-@>
+
+Specify the threads that can be used. [default: 1]
+
+=item B<--help|-h>
+
+Show this help message.
+
+=back
+
+=head1 SUBCOMMANDS
+
+=over 8
+
+=item B<Ghost>
+
+Run Garfield to search potential synthetic association to individual peak genotypes, within an specific flanking interval.
+
+=back
+
+=head1 SPECIFIC OPTIONS FOR SUBCOMMAND: Ghost
+
+=over 8
+
+=item B<--INDpeak|-I [required]>
+
+INDpeak file with a list of individual peaks, only one column and the name should be present in the genotype .bim file
+
+=item B<--extension|-e [optional]>
+
+Extension of flanking intervals to search synthetic combinations of each individual peak [Default: 100000]
+
+=item B<--rmLD2peak|-rm [optional]>
+
+Variants that show LD r2 above this level should be excluded first, and only the remained variants [individually not linking with the peak] are considered in searching possible synthetic associations [Default: 0.3]
+
+=item B<--LDprune_rsq|-prune [optional]>
+
+Among the remained variants after option --rmLD2peak|-rm, another variant pruning is applied based on the given LD r2 threshold here (and the "--indep-pairwise 10 3 $LDprune_rsq" in plink with be applied; set to 1 to cancel this additional pruning process) [Default: 0.9]
+
+=back
+
+=head1 EXAMPLES
+
+Run Garfield by Ghost:
+  Garfield Ghost --genotype input --INDpeak peak.list --extension 100000 --rmLD2peak 0.3 --LDprune_rsq 0.9 --output output --temporary ./tmp --prefix test2peak --threads 2
+
+=cut
