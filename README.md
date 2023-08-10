@@ -1,6 +1,6 @@
 # Garfield
 Short description
-![](images/Garfield_logo_new.png)
+<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="200" height="200">
 
 ## Table of Contents
 =================
