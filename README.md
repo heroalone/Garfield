@@ -115,9 +115,7 @@ You acknowledge and agree that the software is provided to you on an "AS IS" bas
 Garfield is released under the GPLv3, which is provided in a separate license file. Briefly, it allows users to legally copy, distribute, and modify. However, any distribution of derivative code must also be open source and abide by the same GPLv3 agreement..
 
 ## Contributing <a name="contribute"></a>
-If Garfield really helps you with new findings, or you have further comments or suggestions, please contact:
-<a name="contact"></a>
-
+If Garfield really helps you with new findings, or you have further comments or suggestions, please contact:<a name="contact"></a><br>
 Dr. Haijun Liu (haijun.liu[at]gmi.oeaw.ac.at).
 
 If you have any good ideas to improve (either programmatically or algorithmically) and want to contribute, please feel free to make a pull request or let me know to invite you as collaborators; YOUR HELP IS ALWAYS VERY WELCOME!
