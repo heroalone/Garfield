@@ -128,7 +128,7 @@ if($status){
 	print "DONE\! running time: ", timestr($time_duration), "\n";
 	
 	if (-e "$main_path/images/Garfield.ascii_art") {
-		open my $ascii_file, '<', '$main_path/images/Garfield.ascii_art';
+		open my $ascii_file, '<', "$main_path/images/Garfield.ascii_art";
 		while (my $line = <$ascii_file>) {
 			print $line;
 		}

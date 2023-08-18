@@ -69,9 +69,10 @@ print "$r_package_output\n";
 if ($r_package_output =~ /successful/) {
     print "All dependencies have been satisfied.\n";
     print "Now you can take Garfield on your journey!\n";
-
+	
+	# my $ascii = "$dir/images/Garfield.ascii_art";
     if (-e "$dir/images/Garfield.ascii_art") {
-		open my $ascii_file, '<', '$dir/images/Garfield.ascii_art';
+		open my $ascii_file, '<', "$dir/images/Garfield.ascii_art";
 		while (my $line = <$ascii_file>) {
 			print $line;
 		}
