@@ -18,11 +18,11 @@ The conventional genetic association analysis often assumes a single causal fact
 ## Table of Contents
 
 - [Installation](#install)
-- [Inputs](#input)
+- [Inputs preparation](#input)
 - [Options](#option)
-- [Usage](#usage)
-- [Citation](#cite)
+- [Usage & examples](#usage)
 - [License](#license)
+- [Citation](#cite)
 - [Contributing/Contact](#contribute)
 - [Q & A](#Q_A)
 
@@ -43,8 +43,8 @@ perl INSTALL.pl
 The following dependencies are required and will be installed:
 
 1. Perl modules (perl ≥ 5 should always work, while v5.32.1 is successfully tested):
-    - <a href="https://metacpan.org/dist/Pod-Usage" target="_blank">Pod::Usage</a>
-    - [Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand){:target="_blank"}
+    - [Pod::Usage](https://metacpan.org/dist/Pod-Usage)
+    - [Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand)
     - [Parallel::ForkManager](https://metacpan.org/pod/Parallel::ForkManager)
 
 2. R packages (R ≥ 3.1 should work, while v3.5.1 is successfully tested):
@@ -57,7 +57,7 @@ The following dependencies are required and will be installed:
 
 ## Preparation of Input Files
 
-#### Phenotype [--trait|-t \<file\>]
+#### - Phenotype [--trait|-t \<file\>]
 
 The phenotype input is a 3-column tab-delimited file with the following structure (FAM_ID, IND_ID, and values):
 ```
@@ -73,7 +73,7 @@ It is recommended to remove all samples with missing phenotype values in advance
 
 
 
-#### Genotype [--genotype|-g \<file\>]
+#### - Genotype [--genotype|-g \<file\>]
 
 The genotype should be in [PLINK binary format](https://www.cog-genomics.org/plink/1.9/formats#bed): `file.bed`, `file.bim` and `file.fam`. You can easily convert other formats into it, for example from VCF:
 
@@ -81,11 +81,11 @@ The genotype should be in [PLINK binary format](https://www.cog-genomics.org/pli
 plink --vcf input.vcf.gz --keep sample_overlap_with_trait.txt --indiv-sort file test_trait.txt --maf 0.02 --make-bed --out output
 ```
 
- `--vcf` : filename of input vcf
- `--keep` : only keep listed samples in the given file, with family IDs in the first column and within-family IDs in the second column
- `--indiv-sort`: specify how samples should be sorted in the genotype, here the 'file' mode is used to take the order in the specify file "test_trait.txt". For other modes please see [here](https://www.cog-genomics.org/plink/1.9/data#indiv_sort).
- `--maf` : filters out all variants with minor allele frequency below this provided threshold, default 0.01
- `--out` : specify the prefix for the output file. Here the output will be `output.bed`, `output.bim`, and `output.fam`.
+  - `--vcf` : filename of input vcf
+  - `--keep` : only keep listed samples in the given file, with family IDs in the first column and within-family IDs in the second column
+  - `--indiv-sort`: specify how samples should be sorted in the genotype, here the 'file' mode is used to take the order in the specify file "test_trait.txt". For other modes please see [here](https://www.cog-genomics.org/plink/1.9/data#indiv_sort).
+  - `--maf` : filters out all variants with minor allele frequency below this provided threshold, default 0.01
+  - `--out` : specify the prefix for the output file. Here the output will be `output.bed`, `output.bim`, and `output.fam`.
  see more other parameters in the [plink documentation](https://www.cog-genomics.org/plink/1.9/).
 
 **Note:** Missing genotypes are not allowed (in both random forest and logic gates analyses), please use various imputation methods in advance to make 100% genotyping rates. See [Beagle](http://faculty.washington.edu/browning/beagle/beagle.html) used in our study.
@@ -93,13 +93,12 @@ plink --vcf input.vcf.gz --keep sample_overlap_with_trait.txt --indiv-sort file 
 
 ### Other input files required by specific mode(s)
 
-BED file
+#### BED (Browser Extensible Data) file
 
 ```bash
 --bed <file.bed>
 ```
-
-The BED file contains coordinates and gene names, with the first four columns as `[chrom start end gene_id]`. Note that the chrom IDs (1 or chr1, etc) should be consistent with that in genotype file.
+Not to be confused with plink genotype bed file. The BED file here contains coordinates and gene names, with the first four columns as `[chrom start end gene_id]`. Note that the chrom IDs (1 or chr1, etc) should be consistent with that in genotype file.
 
 #### fai index or genome file
 
@@ -115,31 +114,32 @@ The `.fai` (fasta index) or `.genome` file contains coordinates for each chromos
 --geneset <gene.set>
 ```
 
-Tab-delimited text file with each row listing two or more gene IDs that will be analyzed together `[gene_id1] --tab-- [gene_id2]`.
+Tab-delimited text file with each row listing two or more gene IDs that will be analyzed together.
 
 #### variant list (e.g. GWAS peaks)
 
 ```bash
---INDpeak <gwas.peak.list> 
+--INDpeak <gwaspeak.list> 
 ```
 
 A list of markers, with only one column and the name should be present in the genotype .bim file.
 
+
+
 ## Options <a name="option"></a>
 
-Additional general parameters in addition to above inputs:
+Additional parameters in addition to above inputs:
 
 ```bash
 --extension|-e <int>
 ```
-
-- Extension of intervals for each flanking of gene. \[Default: 50000\]
+       - Extension of intervals for each flanking of gene. \[Default: 50000\]
 
 ```bash
 --outdir|-o <string>
 ```
 
-- Specify the directory of outputs. \[default: ./\]
+       - Specify the directory of outputs. \[default: ./\]
 
 ```bash
 --prefix|-p <string>
