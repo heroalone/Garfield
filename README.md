@@ -133,13 +133,12 @@ Additional parameters in addition to above inputs:
 ```bash
 --extension|-e <int>
 ```
-       - Extension of intervals for each flanking of gene. \[Default: 50000\]
+- Extension of intervals for each flanking of gene. \[Default: 50000\]
 
 ```bash
 --outdir|-o <string>
 ```
-
-       - Specify the directory of outputs. \[default: ./\]
+- Specify the directory of outputs. \[default: ./\]
 
 ```bash
 --prefix|-p <string>
