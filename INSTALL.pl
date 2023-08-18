@@ -13,8 +13,8 @@ my $dir = dirname(abs_path $0);
 my $cpanm_path;
 $cpanm_path = qx(which cpanm);
 
-if ($? == 0 && $command_path) {
-	print "use cpanm at: $command_path\n";
+if ($? == 0 && $cpanm_path) {
+	print "use cpanm at: $cpanm_path\n";
 }
 else {
 	my $script_cpanm = "$dir/scripts/cpanminus";
@@ -24,7 +24,7 @@ else {
 	else {
 		$cpanm_path = $script_cpanm;
 		system("chmod +x $cpanm_path");
-		print "use cpanm at: $command_path\n";
+		print "use cpanm at: $cpanm_path\n";
 	}
 }
 
