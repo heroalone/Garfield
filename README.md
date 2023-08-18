@@ -1,10 +1,23 @@
-# Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions
 
-<div align="center">
-    <img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="222" height="222">
-</div>
+<table>
+<tr>
+<td width="30%">
+<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="222" height="222">
+</td>
+<td width="70%">  
+## Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions
+</td>
+</tr>
+</table>
 
-## Project Overview
+
+%## Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions
+
+%<div align="center">
+%    <img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="222" height="222">
+%</div>
+
+## Overview
 
 The conventional genetic association analysis often assumes a single causal factor underlying each locus in an additive manner. While this simplifies modeling and aids in findings, it may not capture the true complexity of genetic architecture. Garfield integrates variable selection through Random Forest and interpretation via logic gates. Its goal is to identify heterogeneity or other interactions involving multiple variants.
 
@@ -22,9 +35,9 @@ The conventional genetic association analysis often assumes a single causal fact
 
 ## Installation <a name="install"></a>
 
-### Installation via `conda` (recommended)
+#### Installation via `conda` (recommended)
 
-### Or download and install locally
+#### Or download and install locally
 ```bash
 git clone git@github.com:heroalone/Garfield.git
 cd Garfield
@@ -36,14 +49,14 @@ perl INSTALL.pl
 The following dependencies are required and will be installed:
 
 1. Perl modules (perl ≥ 5 should always work, while v5.32.1 is successfully tested):
-    - [Pod::Usage](https://metacpan.org/dist/Pod-Usage)
-    - ["Getopt::Long::Subcommand"](https://metacpan.org/pod/Getopt::Long::Subcommand)
-    - ["Parallel::ForkManager"](https://metacpan.org/pod/Parallel::ForkManager)
+    - <a href="https://metacpan.org/dist/Pod-Usage" target="_blank">Pod::Usage</a>
+    - [Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand)
+    - [Parallel::ForkManager](https://metacpan.org/pod/Parallel::ForkManager)
 
 2. R packages (R ≥ 3.1 should work, while v3.5.1 is successfully tested):
-    - ["genio"](https://cran.r-project.org/web/packages/genio/index.html)
-    - ["ranger"](https://cran.r-project.org/web/packages/ranger/index.html)
-    - ["logicFS"](https://www.bioconductor.org/packages/release/bioc/html/logicFS.html)
+    - [genio](https://cran.r-project.org/web/packages/genio/index.html)
+    - [ranger](https://cran.r-project.org/web/packages/ranger/index.html)
+    - [logicFS](https://www.bioconductor.org/packages/release/bioc/html/logicFS.html)
 
 ---
 
@@ -66,7 +79,7 @@ It is recommended to remove all samples with missing phenotype values in advance
 
 
 
-#### Genotype [--genotype|-g \<file\>\
+#### Genotype [--genotype|-g \<file\>]
 
 The genotype should be in [PLINK binary format](https://www.cog-genomics.org/plink/1.9/formats#bed): `file.bed`, `file.bim` and `file.fam`. You can easily convert other formats into it, for example from VCF:
 
@@ -74,12 +87,12 @@ The genotype should be in [PLINK binary format](https://www.cog-genomics.org/pli
 plink --vcf input.vcf.gz --keep sample_overlap_with_trait.txt --indiv-sort file test_trait.txt --maf 0.02 --make-bed --out output
 ```
 
-- `--vcf` : filename of input vcf
-- `--keep` : only keep listed samples in the two columns file, with family IDs in the first column and within-family IDs in the second column
-- `--indiv-sort`: specify how samples should be sorted in the genotype, here the 'file' mode is used to take the order in the specify file "test_trait.txt". For other modes please see [here](https://www.cog-genomics.org/plink/1.9/data#indiv_sort).
-- `--maf` : filters out all variants with minor allele frequency below this provided threshold, default 0.01
-- `--out` : specify the prefix for the output file. Here the output will be `output.bed`, `output.bim`, and `output.fam`.
-- see more other parameters in the [plink documentation](https://www.cog-genomics.org/plink/1.9/).
+ `--vcf` : filename of input vcf
+ `--keep` : only keep listed samples in the given file, with family IDs in the first column and within-family IDs in the second column
+ `--indiv-sort`: specify how samples should be sorted in the genotype, here the 'file' mode is used to take the order in the specify file "test_trait.txt". For other modes please see [here](https://www.cog-genomics.org/plink/1.9/data#indiv_sort).
+ `--maf` : filters out all variants with minor allele frequency below this provided threshold, default 0.01
+ `--out` : specify the prefix for the output file. Here the output will be `output.bed`, `output.bim`, and `output.fam`.
+ see more other parameters in the [plink documentation](https://www.cog-genomics.org/plink/1.9/).
 
 **Note:** Missing genotypes are not allowed (in both random forest and logic gates analyses), please use various imputation methods in advance to make 100% genotyping rates. See [Beagle](http://faculty.washington.edu/browning/beagle/beagle.html) used in our study.
 
