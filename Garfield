@@ -1,0 +1,144 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Pod::Usage;
+use File::Basename;
+use Cwd qw(abs_path);
+use Getopt::Long::Subcommand;
+use Benchmark;
+use Garfield::Gene;
+use Garfield::Window;
+use Garfield::GeneSet;
+use Garfield::Ghost;
+# use Garfield::GhostRaw;
+
+
+my $time_start = Benchmark->new;
+
+use lib dirname(abs_path($0)) . '/lib';
+my $main_path = dirname(abs_path($0));
+
+my %option;
+my %option_subcmd;
+
+my $getOpts = &read_option();
+
+my $status = 0;
+### Version
+my $VERSION = "v0.1";
+if ($option{version}) {
+	print "Current version: $VERSION\n";
+	exit 0;
+}
+
+&check_option();
+sub check_option {
+	pod2usage(
+		-exitval => 1,
+		-verbose => 2,
+		-input => "$main_path/doc/Garfield_help.txt"
+	) if (!exists $getOpts->{"subcommand"} || !${$getOpts->{subcommand}}[0]);
+
+	my ($sub_cmd) = @{$getOpts->{subcommand}};
+	print "\nSubcommand: $sub_cmd\n";
+
+	if ($sub_cmd eq "Gene") {
+		my $check_para = Garfield::Gene -> new();
+		$status = $check_para -> check_para_sub(\%option_subcmd, \%option);
+		# if($status){
+			# $check_para -> start_Gene(\%option_subcmd, \%option);
+		# }
+	}
+	elsif ($sub_cmd eq "Window") {
+		my $check_para = Garfield::Window -> new();
+		$status = $check_para -> check_para_sub(\%option_subcmd, \%option);
+		# if($status){
+			# $check_para -> start_Window(\%option_subcmd, \%option);
+		# }
+	}
+	elsif ($sub_cmd eq "GeneSet") {
+		my $check_para = Garfield::GeneSet -> new();
+		$status = $check_para -> check_para_sub(\%option_subcmd, \%option);
+		# if($status){
+			# $check_para -> start_GeneSet(\%option_subcmd, \%option);
+		# }
+	}
+	elsif ($sub_cmd eq "Ghost") {
+		my $check_para = Garfield::Ghost -> new();
+		$status = $check_para -> check_para_sub(\%option_subcmd, \%option);
+		# if($status){
+			# $check_para -> start_GeneSet(\%option_subcmd, \%option);
+		# }
+	}
+	# elsif ($sub_cmd eq "GhostRaw") {
+		# my $check_para = Garfield::GhostRaw -> new();
+		# $status = $check_para -> check_para_sub(\%option_subcmd, \%option);
+		# # if($status){
+			# # $check_para -> start_GeneSet(\%option_subcmd, \%option);
+		# # }
+	# }
+}
+
+sub read_option {
+	my $getOpts = GetOptions(
+		options => {
+			'help|h|?'					=> \$option{help},
+			'version|v'					=> \$option{version},
+			'verbose'					=> \$option{verbose},
+			'genotype|g=s'				=> \$option_subcmd{genotype_file},
+			'trait|t=s'					=> \$option_subcmd{trait_file},
+			'outdir|o=s'				=> \$option_subcmd{outdir},
+			'temporary|tmp=s'			=> \$option_subcmd{temporary},
+			'prefix|p=s'				=> \$option_subcmd{prefix},
+			'threads|@=i'				=> \$option_subcmd{threads},
+		},
+		subcommands => {
+			Gene => {
+				options => {
+					'bed|b=s'			=> \$option_subcmd{bed},
+					'extension|e=i'		=> \$option_subcmd{extension},
+				}
+			},
+			Window => {
+				options => {
+					'faidx|f=s'			=> \$option_subcmd{genome},
+					'window|w=i'		=> \$option_subcmd{window},
+					'step|s=i'			=> \$option_subcmd{step},
+				}
+			},
+			GeneSet => {
+				options => {
+					'bed|b=s'			=> \$option_subcmd{bed},
+					'geneset|gs=s'		=> \$option_subcmd{geneset},
+					'extension|e=i'		=> \$option_subcmd{extension},
+				}
+			},
+			Ghost => {
+				options => {
+					'INDpeak|I=s'			=> \$option_subcmd{INDpeak},
+					'extension|e=i'			=> \$option_subcmd{extension},
+					'rmLD2peak|rm=f'		=> \$option_subcmd{rmLD2peak},
+					'LDprune_rsq|prune=f'		=> \$option_subcmd{LDprune},
+
+				}
+			},
+			# GhostRaw => {
+				# options => {
+					# 'INDpeak|I=s'			=> \$option_subcmd{INDpeak},
+					# 'extension|e=i'			=> \$option_subcmd{extension},
+					# 'rmLD2peak|rm=f'		=> \$option_subcmd{rmLD2peak},
+				# }
+			# },
+		}
+	);
+	push @{$option_subcmd{subcommand}}, @{$getOpts->{subcommand}} if exists $getOpts->{subcommand};
+	return $getOpts;
+}
+
+
+if($status){
+	my $time_end = Benchmark->new;
+	my $time_duration = timediff($time_end, $time_start);
+	print "DONE\! running time: ", timestr($time_duration), "\n";
+}
