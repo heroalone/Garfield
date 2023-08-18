@@ -32,13 +32,7 @@ else {
 # Check if local::lib is set up
 my $perl_lib_check = qx(perl -e 'use local::lib;');
 if (!$perl_lib_check) {
-	die <<OUT;
-Please run the following command to install and set up local::lib:
-
-	$cpanm_path --local-lib=~/perl5 local::lib && eval \$(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
-
-Then run `perl INSTALL.pl` again.
-OUT
+	system("$cpanm_path --local-lib=~/perl5 local::lib && eval \$(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)");
 }
 
 # Install Perl modules
