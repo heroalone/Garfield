@@ -13,7 +13,7 @@
 
 ## Overview
 
-The conventional genetic association analysis often assumes a single causal factor underlying each locus in an additive manner. While this simplifies modeling and aids in findings, it may not capture the true complexity of genetic architecture. Garfield integrates variable selection through Random Forest and interpretation via logic gates. Its goal is to identify heterogeneity or other interactions involving multiple variants.
+The conventional genetic association analysis often assumes a single causal factor underlying each locus in an additive manner. While this simplifies modeling and aids in findings, it may not capture the true complexity of genetic architecture. Garfield integrates variable selection through random forest and interpretation via logic gates. Its goal is to identify heterogeneity or other interactions involving multiple variants.
 
 ## Table of Contents
 
@@ -95,34 +95,19 @@ plink --vcf input.vcf.gz --keep sample_overlap_with_trait.txt --indiv-sort file 
 
 #### BED (Browser Extensible Data) file
 
-```bash
---bed <file.bed>
-```
-Not to be confused with plink genotype bed file. The BED file here contains coordinates and gene names, with the first four columns as `[chrom start end gene_id]`. Note that the chrom IDs (1 or chr1, etc) should be consistent with that in genotype file.
+`--bed <file.bed>` : Not to be confused with plink genotype bed file. The BED file here contains coordinates and gene names, with the first four columns as `[chrom start end gene_id]`. Note that the chrom IDs (1 or chr1, etc) should be consistent with that in genotype file.
 
 #### fai index or genome file
 
-```bash
---faidx <file.fai>
-```
-
-The `.fai` (fasta index) or `.genome` file contains coordinates for each chromosome, with the first two columns as `[chrom length]`.
+`--faidx <file.fai>` : The `.fai` (fasta index) or `.genome` file contains coordinates for each chromosome, with the first two columns as `[chrom length]`.
 
 #### Gene set file
 
-```bash
---geneset <gene.set>
-```
-
-Tab-delimited text file with each row listing two or more gene IDs that will be analyzed together.
+`--geneset <gene.set>` : Tab-delimited text file with each row listing two or more gene IDs that will be analyzed together.
 
 #### variant list (e.g. GWAS peaks)
 
-```bash
---INDpeak <gwaspeak.list> 
-```
-
-A list of markers, with only one column and the name should be present in the genotype .bim file.
+`--INDpeak <gwaspeak.list>` : A list of markers, with only one column and the name should be present in the genotype .bim file.  
 
 
 
