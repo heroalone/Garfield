@@ -1,31 +1,38 @@
-cat("Loading R libraries\n")
+cat("Installing R libraries\n")
 
-if(!suppressMessages(library(genio, warn.conflicts=F))){
-	install.packages("genio", dep=T)
-	if(!suppressMessages(library(genio, warn.conflicts=F))) {
-		stop("Install genio R package failed! You may have to install it manually.\n")
-	}
+install_package <- function(package_name) {
+  if (!require(package_name, character.only = TRUE, quietly = TRUE)) {
+    install.packages(package_name, dependencies = TRUE)
+    if (!require(package_name, character.only = TRUE, quietly = TRUE)) {
+      stop(paste("Install", package_name, "R package failed! You may have to install it manually.\n"))
+    }
+  }
+}
+
+install_package("genio")
+install_package("ranger")
+
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+  install.packages("BiocManager")
+}
+BiocManager::install("logicFS")
+
+
+# # # check_and_install_package("logicFS")
+required_packages <- c("genio", "ranger", "logicFS")
+
+recheck_packages <- function(package_names) {
+  missing_packages <- package_names[!sapply(package_names, requireNamespace, quietly = TRUE)]
+  return(missing_packages)
 }
 
 
-if(!suppressMessages(library(ranger, warn.conflicts=F))){
-	install.packages("ranger", dep=T)
-	if(!suppressMessages(library(ranger, warn.conflicts=F))) {
-		stop("Install ranger R package failed! You may have to install it manually.\n")
-	}
+missing_packages <- recheck_packages(required_packages)
+
+if (length(missing_packages) == 0) {
+  cat("All required R packages have been successfully installed!\n")
+} else {
+  cat("The installation of the following packages has failed. Please install them manually.\n")
+  cat(paste(missing_packages, collapse = ", "), "\n")
 }
-
-
-if(!suppressMessages(library(logicFS, warn.conflicts=F))){
-	if (!require("BiocManager", quietly = TRUE))
-		install.packages("BiocManager")
-
-	BiocManager::install("logicFS")
-
-	if(!suppressMessages(library(logicFS, warn.conflicts=F))) {
-		stop("Loading package cowplot failed! Please install manually.\n")
-	}
-}
-
-cat("R packages installed succesfully\n")
 
