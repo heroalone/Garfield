@@ -30,7 +30,7 @@ recheck_packages <- function(package_names) {
 missing_packages <- recheck_packages(required_packages)
 
 if (length(missing_packages) == 0) {
-  cat("All required R packages have been successfully installed!\n")
+  cat("Required R packages have been successfully installed!\n")
 } else {
   cat("The installation of the following packages has failed. Please install them manually.\n")
   cat(paste(missing_packages, collapse = ", "), "\n")
