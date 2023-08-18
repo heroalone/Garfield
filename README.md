@@ -5,17 +5,11 @@
 <img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="222" height="222">
 </td>
 <td width="70%">  
-## Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions
+<h1> Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions</h1>
 </td>
 </tr>
 </table>
 
-
-%## Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions
-
-%<div align="center">
-%    <img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="222" height="222">
-%</div>
 
 ## Overview
 
