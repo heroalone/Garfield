@@ -55,9 +55,9 @@ The following dependencies are required and will be installed:
 ---
 
 
-## Preparation of Input Files
+## Preparation of Input Files <a name="input"></a>
 
-#### - Phenotype [--trait|-t \<file\>]
+####  Phenotype [--trait|-t \<file\>]
 
 The phenotype input is a 3-column tab-delimited file with the following structure (FAM_ID, IND_ID, and values):
 ```
@@ -73,7 +73,7 @@ It is recommended to remove all samples with missing phenotype values in advance
 
 
 
-#### - Genotype [--genotype|-g \<file\>]
+####  Genotype [--genotype|-g \<file\>]
 
 The genotype should be in [PLINK binary format](https://www.cog-genomics.org/plink/1.9/formats#bed): `file.bed`, `file.bim` and `file.fam`. You can easily convert other formats into it, for example from VCF:
 
@@ -130,63 +130,17 @@ A list of markers, with only one column and the name should be present in the ge
 
 Additional parameters in addition to above inputs:
 
-```bash
---extension|-e <int>
-```
-- Extension of intervals for each flanking of gene. \[Default: 50000\]
+  - `--extension|-e <int>` : Extension of intervals for each flanking of gene. \[Default: 50000\]
+  - `--outdir|-o <string>` : Specify the directory of outputs. \[default: ./\]
+  - `--prefix|-p <string>` : Specify the prefix of output pseudo-genotypes. \[default: genotype_phenotype_subcommand\]
+  - `--temporary|-tmp <string>` : Specify the temporary directory for intermediate processing. \[default: ./tmp\].
+  - `--threads|-@ <int>` : Specify the threads that can be used. \[default: 1\]
+  - `--window|-w <int>` : Window size of each sliding window. \[Default: 50000\]
+  - `--step|-s <int>` : Step size of each sliding window. \[Default: 25000\]
+  - `--INDpeak <gwaspeak.list>` : A list of markers, only one column and the name should be present in the genotype .bim file.
 
-```bash
---outdir|-o <string>
-```
-- Specify the directory of outputs. \[default: ./\]
-
-```bash
---prefix|-p <string>
-```
-
-- Specify the prefix of output pseudo-genotypes. \[default: genotype_phenotype_subcommand\]
-
-```bash
---temporary|-tmp <string>
-```
-
-- Specify the temporary directory for intermediate processing. \[default: ./tmp\]
-
-```bash
---threads|-@ <int>
-```
-
-- Specify the threads that can be used. \[default: 1\]
-
-```bash
---window|-w <int>  
-```
-
-- Window size of each sliding window. \[Default: 50000\]
-
-```bash
---step|-s <int>
-```
-
-- Step size of each sliding window. \[Default: 25000\]
-
-```bash
---INDpeak <gwaspeak.list>
-```
-
-- A list of markers, only one column and the name should be present in the genotype .bim file.
-
-```bash
---rmLD2peak|-rm <float>
-```
-
-- Variants that show LD r2 above this level with that of the provided variant list are excluded \[Default: 0.3\]
-
-```bash
---LDprune_rsq|-prune <float>
-```
-
-- Variant pruning is applied based on the given LD r2 threshold here (and the "--indep-pairwise 10 3 \<float\>" in plink with be applied); set to 1 to cancel this pruning process \[Default: 0.9\]
+  - `--rmLD2peak|-rm <float>` : Variants that show LD r2 above this level with that of the provided variant list are excluded. \[Default: 0.3\]
+  - `--LDprune_rsq|-prune <float>` : Variant pruning is applied based on the given LD r2 threshold here (and the "--indep-pairwise 10 3 \<float\>" in plink with be applied); set to 1 to cancel this pruning process. \[Default: 0.9\]
 
 #### For detailed documentation locally, you can type:
 
@@ -242,12 +196,12 @@ Garfield is released under the GPLv3 license. See the separate license file for 
 
 ## Contributing <a name="contribute"></a>
 
-Any feedback, comments, suggestions or contributions to help improve Garfield is highly welcome. If you have encountered any issues or have ideas for new features, please let me know. There are a few ways to contribute:
+Any feedback, comments, suggestions or contributions to help improve Garfield is highly welcome. If you have encountered any issues or have ideas for new features, please let me know. A few ways to contribute:
 
 #### Contact the Developers
 
 For questions or comments, please contact the lead developer Dr. Haijun Liu: haijun.liu@gmi.oeaw.ac.at.  
-I'm also excited to hear about any new findings you may have using this software, DO let me know!
+I'm also excited to hear about any new findings you may have using this software, **DO** let me know!
 
 #### Submit Issues
 
