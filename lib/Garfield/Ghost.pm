@@ -11,7 +11,7 @@ use Fcntl qw(:flock LOCK_EX LOCK_UN);
 use Parallel::ForkManager;
 use File::Spec;
 
-my $max_retries = 5;
+my $max_retries = 10;
 my $maf_filter = 0.02;
 my ($out_tped_fh, $out_dnf_fh);
 
@@ -111,6 +111,7 @@ sub RUN_Ghost {
 	my $prefix = $opts_sub->{prefix};
 	my $temporary = $opts_sub->{temporary};
 	my $output_dir = $opts_sub->{outdir};
+	my $keep_negative = $opts_sub->{keep_negative};
 	
 	open($out_tped_fh, '>', "$output_dir/Garfield.Geno.$prefix.tped") or die "Cannot open $output_dir/Garfield.Geno.$prefix.tped for writing: $!";
 	open($out_dnf_fh, '>', "$output_dir/Garfield.bestDNF.$prefix.txt") or die "Cannot open $output_dir/Garfield.bestDNF.$prefix.txt for writing: $!";
@@ -216,8 +217,8 @@ sub RUN_Ghost {
 
 # Function to process each gene and return the result
 sub function_process_Garfield {
-	my ($plinkfile, $trait_file, $plinkname) = @_;
-	my $r_output = `Rscript $FindBin::Bin/lib/Garfield_main.functions.R.sh $plinkfile $trait_file $plinkname`;
+	my ($plinkfile, $trait_file, $plinkname, $keep_negative) = @_;
+	my $r_output = `Rscript $FindBin::Bin/lib/Garfield_main.functions.R.sh $plinkfile $trait_file $plinkname $keep_negative`;
 	my ($result_TPED, $result_DNF) = $r_output =~ /([^\n]+)\n([^\n]+)/;
 	return($result_TPED, $result_DNF);
 }
@@ -233,24 +234,27 @@ sub process_Ghost_Detail {
     my $retry_count = 0;
 
     while ($retry_count < $max_retries) {
-        ($result_TPED, $result_DNF) = function_process_Garfield("$plink_file_prefix.$ld_file_suffix", "$plinkfile.trait", "$plinkname");
+        ($result_TPED, $result_DNF) = function_process_Garfield("$plink_file_prefix.$ld_file_suffix", "$plinkfile.trait", "$plinkname", "$keep_negative");
         $result_TPED =~ s/1\.5 1\.5/0 0/g if $result_TPED =~ /1\.5/;
         last if defined $result_TPED;
         $retry_count++;
     }
 
-    if (defined $result_TPED) {
-        flock($out_tped_fh, LOCK_EX);
-        flock($out_dnf_fh, LOCK_EX);
-        print $out_tped_fh "$result_TPED\n";
-        print $out_dnf_fh "$result_DNF\n";
-        flock($out_tped_fh, LOCK_UN);
-        flock($out_dnf_fh, LOCK_UN);
-    } else {
-        warn "Error processing: $line\n";
-    }
+	if (defined $result_DNF) {
+		flock($out_dnf_fh, LOCK_EX);
+			print $out_dnf_fh "$result_DNF\n";
+		flock($out_dnf_fh, LOCK_UN);
+		
+		if (defined $out_tped_fh && (not $out_tped_fh=~/NULL/ig)) {
+			flock($out_tped_fh, LOCK_EX);
+				print $out_tped_fh "$result_TPED\n";
+			flock($out_tped_fh, LOCK_UN);
+		}
+	}
+	else {
+		warn "Error processing: $ID\n";
+	}
+
 }
-
-
 
 1;

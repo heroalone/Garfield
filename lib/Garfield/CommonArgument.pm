@@ -36,6 +36,12 @@ sub common_argument {
 		print "Genotype file is: $opts_sub->{genotype_file}\n" if $exit_code == 0;
 	}
 	
+	
+	if (!$opts_sub->{"keep_negative"}) {
+		$opts_sub->{"keep_negative"} = 1;
+	}
+	
+	
 	if (not $sub_cmd=~/Ghost/){
 		if (!$opts_sub->{"trait_file"}) {
 			print "Please provide --trait file!\n";
@@ -89,9 +95,9 @@ sub common_argument {
 		File::Path::make_path($opts_sub->{"temporary"}) or die "Failed to create temporary directory: $!";
 	}
 	print "Temporary directory is: $opts_sub->{temporary}\n" if $exit_code == 0;
+
 	#####################
-
-
+	#####################
 	if ($opts_sub->{"genotype_file"} && $opts_sub->{"trait_file"}) {
 		if (!$opts_sub->{"prefix"}) {
 			$opts_sub->{"prefix"} = join("_",  $tmp_geno,  $tmp_pheno, $sub_cmd);

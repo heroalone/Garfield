@@ -11,7 +11,7 @@ use Fcntl qw(:flock LOCK_EX LOCK_UN);
 use Parallel::ForkManager;
 use File::Spec;
 
-my $max_retries = 5;
+my $max_retries = 10;
 my $maf_filter = 0.02;
 my ($out_tped_fh, $out_dnf_fh);
 
@@ -65,10 +65,6 @@ sub check_para_sub {
 		$opts_sub->{"bed"} = abs_path $opts_sub->{"bed"};
 	}
 
-	# Default for Gene
-	if (!$opts_sub->{"extension"}) {
-		$opts_sub->{"extension"} = 50000;
-	}
 
 	#### Common arguments
 	my $cm_arg = Garfield::CommonArgument->new();
@@ -80,6 +76,9 @@ sub check_para_sub {
 		exit 0;
 	} else {
 		# return "TRUE";
+		print "Gene bed file is: $opts_sub->{bed}\n";
+		print "With the extension of flanking of each gene: $opts_sub->{extension} bp\n";
+		print "\#threads will be used: $opts_sub->{'threads'}\n";
 		RUN_Gene($class, $opts_sub);
 	}
 }
@@ -94,13 +93,15 @@ sub RUN_Gene {
 	my $prefix = $opts_sub->{prefix};
 	my $temporary = $opts_sub->{temporary};
 	my $output_dir = $opts_sub->{outdir};
+	my $keep_negative = $opts_sub->{keep_negative};
 	
 	open($out_tped_fh, '>', "$output_dir/Garfield.Geno.$prefix.tped") or die "Cannot open $output_dir/Garfield.Geno.$prefix.tped for writing: $!";
 	open($out_dnf_fh, '>', "$output_dir/Garfield.bestDNF.$prefix.txt") or die "Cannot open $output_dir/Garfield.bestDNF.$prefix.txt for writing: $!";
 	
 
 	# my (%TPED, %bestDNF);
-	my $pm;
+	my $pm = Parallel::ForkManager->new($max_threads);
+	
 	open(my $bed_fh, '<', $bed_file) || die "Cannot open $bed_file: $!";
 	while (my $line = <$bed_fh>) {
 		chomp $line;
@@ -112,11 +113,9 @@ sub RUN_Gene {
 			print "Less than 4 columns that are at least required, will be skipped: $line\n";
 			next;
 		}
-
-		# Spawn a new process to process the gene
-		$pm = Parallel::ForkManager->new($max_threads);
-		$pm->start and next;
 		
+		# Spawn a new process to process the gene
+		$pm->start and next;
 		
 		my $chr = $i[0];
 		my $start = $i[1];
@@ -131,29 +130,34 @@ sub RUN_Gene {
 		my $plinkname = join(".", $prefix, join("_", $chr, $start, $end, $gene));
 		my $plinkfile = File::Spec->catfile($temporary, $plinkname);
 		# print "$trait_file $gene $plinkname\n";
-		system("plink --bfile $genotype_file --chr $chr --from-bp $start --to-bp $end --maf $maf_filter --make-bed --out $plinkfile >/dev/null 2>&1");
-		
+		system("plink --bfile $genotype_file --chr $chr --from-bp $start --to-bp $end --maf $maf_filter --indiv-sort 0 --make-bed --out $plinkfile >/dev/null 2>&1");
+
 		if (-e "$plinkfile.bed") {
 			# Retry mechanism for failed gene processing
 			my ($result_TPED, $result_DNF);
 			my $retry_count = 0;
 			
 			while ($retry_count < $max_retries) {
-				($result_TPED, $result_DNF) = function_process_Garfield($plinkfile, $trait_file, $plinkname);
+				($result_TPED, $result_DNF) = function_process_Garfield($plinkfile, $trait_file, $plinkname, $keep_negative);
+				$result_TPED =~ s/1\.5 1\.5/1 2/g if $result_TPED=~/1\.5/;;
 				last if defined $result_TPED;
 				$retry_count++;
 			}
 
 			# Store the gene result if successful, otherwise log an error
-			if (defined $result_TPED) {
-				flock($out_tped_fh, LOCK_EX);
+			if (defined $result_DNF) {
 				flock($out_dnf_fh, LOCK_EX);
-					print $out_tped_fh "$result_TPED\n";
 					print $out_dnf_fh "$result_DNF\n";
-				flock($out_tped_fh, LOCK_UN);
 				flock($out_dnf_fh, LOCK_UN);
-			} else {
-				warn "Error processing: $line\n";
+				
+				if (defined $out_tped_fh && (not $out_tped_fh=~/NULL/ig)) {
+					flock($out_tped_fh, LOCK_EX);
+						print $out_tped_fh "$result_TPED\n";
+					flock($out_tped_fh, LOCK_UN);
+				}
+			}
+			else {
+				warn "Error processing: $ID\n";
 			}
 		}
 		# # # Delete temporary files
@@ -170,8 +174,8 @@ sub RUN_Gene {
 
 # Function to process each gene and return the result
 sub function_process_Garfield {
-	my ($plinkfile, $trait_file, $plinkname) = @_;
-	my $r_output = `Rscript $FindBin::Bin/lib/Garfield_main.functions.R.sh $plinkfile $trait_file $plinkname`;
+	my ($plinkfile, $trait_file, $plinkname, $keep_negative) = @_;
+	my $r_output = `Rscript $FindBin::Bin/lib/Garfield_main.functions.R.sh $plinkfile $trait_file $plinkname $keep_negative`;
 	my ($result_TPED, $result_DNF) = $r_output =~ /([^\n]+)\n([^\n]+)/;
 	return($result_TPED, $result_DNF);
 }

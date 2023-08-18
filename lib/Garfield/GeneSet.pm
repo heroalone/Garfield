@@ -11,7 +11,7 @@ use Fcntl qw(:flock LOCK_EX LOCK_UN);
 use Parallel::ForkManager;
 use File::Spec;
 
-my $max_retries = 5;
+my $max_retries = 10;
 my $maf_filter = 0.02;
 my ($out_tped_fh, $out_dnf_fh);
 
@@ -92,6 +92,10 @@ sub check_para_sub {
 		exit 0;
 	} else {
 		# return "TRUE";
+		print "Gene bed file is: $opts_sub->{bed}\n";
+		print "Gene-set file is: $opts_sub->{geneset}\n";
+		print "With the extension of flanking of each gene: $opts_sub->{extension} bp\n";
+		print "\#threads will be used: $opts_sub->{'threads'}\n";
 		RUN_GeneSet($class, $opts_sub);
 	}
 }
@@ -108,12 +112,13 @@ sub RUN_GeneSet{
 	my $geneset_file = $opts_sub->{geneset};
 	my $temporary = $opts_sub->{temporary};
 	my $output_dir = $opts_sub->{outdir};
+	my $keep_negative = $opts_sub->{keep_negative};
 	
 	open($out_tped_fh, '>', "$output_dir/Garfield.Geno.$prefix.tped") or die "Cannot open $output_dir/Garfield.Geno.$prefix.tped for writing: $!";
 	open($out_dnf_fh, '>', "$output_dir/Garfield.bestDNF.$prefix.txt") or die "Cannot open $output_dir/Garfield.bestDNF.$prefix.txt for writing: $!";
 	
 	
-	my %bed; my $pm;
+	my %bed;
 	open(my $bed_fh, '<', $bed_file) || die "Cannot open $bed_file: $!";
 	while (my $line = <$bed_fh>) {
 		chomp $line;
@@ -129,6 +134,8 @@ sub RUN_GeneSet{
 	}
 	close $bed_fh;
 	
+	
+	my $pm = Parallel::ForkManager->new($max_threads);
 	open(my $geneset_fh, '<', $geneset_file) || die "Cannot open $geneset_file: $!";
 	while (my $line = <$geneset_fh>) {
 		chomp $line;
@@ -142,54 +149,65 @@ sub RUN_GeneSet{
 		}
 		
 		# Spawn a new process to process the geneset
-		$pm = Parallel::ForkManager->new($max_threads);
 		$pm->start and next;
-
 
 		my $plinkname = join(".", $prefix, join("__", @i));
 		my $plinkfile = File::Spec->catfile($temporary, $plinkname);
 		for (my $n=0; $n<@i; $n++){
-				unless (exists $bed{$i[$n]}){
-					print "ERROR: $i[$n] is present in GeneSet but not in gene bed file, please check!\n";
-					exit;
-				}
-				my ($chr, $start, $end)=split("\t", $bed{$i[$n]});
-				
-				$start -= $extension if $start >= $extension;
-				$start=0 if $start < $extension;
-				$end += $extension;
-				system("plink --bfile $genotype_file --chr $chr --from-bp $start --to-bp $end --maf $maf_filter --write-snplist --out $plinkfile.$i[$n] >/dev/null 2>&1");
+			unless (exists $bed{$i[$n]}){
+				print "ERROR: $i[$n] is present in GeneSet but not in gene bed file, please check!\n";
+				exit;
+			}
+			my ($chr, $start, $end)=split("\t", $bed{$i[$n]});
+			
+			$start -= $extension if $start >= $extension;
+			$start=0 if $start < $extension;
+			$end += $extension;
+			system("plink --bfile $genotype_file --chr $chr --from-bp $start --to-bp $end --maf $maf_filter --write-snplist --out $plinkfile.$i[$n] >/dev/null 2>&1");
+			if (-e "$plinkfile.$i[$n].snplist") {
 				system("cat $plinkfile.$i[$n].snplist >> $temporary/merge.$plinkname.snplist");
 				system ("rm $plinkfile.$i[$n].*");
 			}
-			system("plink --bfile $genotype_file --extract $temporary/merge.$plinkname.snplist --make-bed --out $plinkfile >/dev/null 2>&1");
-		if (-e "$plinkfile.bed") {
+		}
+		
+		if (-e "$temporary/merge.$plinkname.snplist") {
+			system("plink --bfile $genotype_file --extract $temporary/merge.$plinkname.snplist --indiv-sort 0 --make-bed --out $plinkfile >/dev/null 2>&1");
+
 			my ($result_TPED, $result_DNF);
 			my $retry_count = 0;
 			while ($retry_count < $max_retries) {
-				my $r_output = `Rscript $FindBin::Bin/lib/Garfield_main.functions.R.sh $plinkfile $trait_file $plinkname`;
+				my $r_output = `Rscript $FindBin::Bin/lib/Garfield_main.functions.R.sh $plinkfile $trait_file $plinkname $keep_negative`;
 				
-				($result_TPED, $result_DNF) =  $r_output =~ /([^\n]+)\n([^\n]+)/;
+				# my ($result_TPED, $result_DNF) = $r_output =~ /([^\n]+)\n([^\n]+)/;
+				my @tmp_output = split("\n", $r_output);
+				my $first_dnf = scalar(@tmp_output)/2;
+				$result_TPED = $tmp_output[0];
+				$result_DNF = $tmp_output[$first_dnf];
+				$result_TPED =~ s/1\.5 1\.5/1 2/g if $result_TPED=~/1\.5/;;
 				last if defined $result_TPED;
 				$retry_count++;
 			}
 
 			# Store the geneset result if successful, otherwise log an error
-			if (defined $result_TPED) {
-				flock($out_tped_fh, LOCK_EX);
+			if (defined $result_DNF) {
 				flock($out_dnf_fh, LOCK_EX);
-					print $out_tped_fh "$result_TPED\n";
 					print $out_dnf_fh "$result_DNF\n";
-				flock($out_tped_fh, LOCK_UN);
 				flock($out_dnf_fh, LOCK_UN);
-			} else {
-				warn "Error processing: $line\n";
+				
+				if (defined $out_tped_fh && (not $out_tped_fh=~/NULL/ig)) {
+					flock($out_tped_fh, LOCK_EX);
+						print $out_tped_fh "$result_TPED\n";
+					flock($out_tped_fh, LOCK_UN);
+				}
+			}
+			else {
+				warn "Error processing: $ID\n";
 			}
 		}
 		# # # Delete temporary files
 		my @plinkfiles = glob("$temporary/$plinkname.*");
 		unlink @plinkfiles;
-		
+		unlink "$temporary/merge.$plinkname.snplist";
 		$pm->finish;
 
 	}
