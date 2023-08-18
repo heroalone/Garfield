@@ -115,18 +115,19 @@ plink --vcf input.vcf.gz --keep sample_overlap_with_trait.txt --indiv-sort file 
 
 Additional parameters in addition to above inputs:
 
-   `--extension|-e <int>` : Extension of intervals for each flanking of gene. \[Default: 50000\]
-   `--outdir|-o <string>` : Specify the directory of outputs. \[default: ./\]
-   `--prefix|-p <string>` : Specify the prefix of output pseudo-genotypes. \[default: genotype_phenotype_subcommand\]
-   `--temporary|-tmp <string>` : Specify the temporary directory for intermediate processing. \[default: ./tmp\]
-   `--threads|-@ <int>` : Specify the threads that can be used. \[default: 1\]
-   `--window|-w <int>` : Window size of each sliding window. \[Default: 50000\]
-   `--step|-s <int>` : Step size of each sliding window. \[Default: 25000\]
-   `--INDpeak <gwaspeak.list>` : A list of markers, only one column and the name should be present in the genotype .bim file.
-   `--rmLD2peak|-rm <float>` : Variants that show LD r2 above this level with that of the provided variant list are excluded. \[Default: 0.3\]
-   `--LDprune_rsq|-prune <float>` : Variant pruning is applied based on the given LD r2 threshold here (and the "--indep-pairwise 10 3 \<float\>" in plink with be applied); set to 1 to cancel this pruning process. \[Default: 0.9\]
+  - `--extension|-e <int>` : Extension of intervals for each flanking of gene. \[Default: 50000\]
+  - `--outdir|-o <string>` : Specify the directory of outputs. \[default: ./\]
+  - `--prefix|-p <string>` : Specify the prefix of output pseudo-genotypes. \[default: genotype_phenotype_subcommand\]
+  - `--temporary|-tmp <string>` : Specify the temporary directory for intermediate processing. \[default: ./tmp\]
+  - `--threads|-@ <int>` : Specify the threads that can be used. \[default: 1\]
+  - `--window|-w <int>` : Window size of each sliding window. \[Default: 50000\]
+  - `--step|-s <int>` : Step size of each sliding window. \[Default: 25000\]
+  - `--INDpeak <gwaspeak.list>` : A list of markers, only one column and the name should be present in the genotype .bim file.
 
-   `--help|-h` : Show detailed documentation locally, which can be run with `Garfield --help` or `Garfield <subcomand> --help`.
+  - `--rmLD2peak|-rm <float>` : Variants that show LD r2 above this level with that of the provided variant list are excluded. \[Default: 0.3\]
+  - `--LDprune_rsq|-prune <float>` : Variant pruning is applied based on the given LD r2 threshold here (and the "--indep-pairwise 10 3 \<float\>" in plink with be applied); set to 1 to cancel this pruning process. \[Default: 0.9\]
+
+  - `--help|-h` : Show detailed documentation locally, which can be run with `Garfield --help` or `Garfield <subcomand> --help`.
 
 
 
