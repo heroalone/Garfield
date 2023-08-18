@@ -44,7 +44,7 @@ The following dependencies are required and will be installed:
 
 1. Perl modules (perl ≥ 5 should always work, while v5.32.1 is successfully tested):
     - <a href="https://metacpan.org/dist/Pod-Usage" target="_blank">Pod::Usage</a>
-    - [Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand)
+    - [Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand){:target="_blank"}
     - [Parallel::ForkManager](https://metacpan.org/pod/Parallel::ForkManager)
 
 2. R packages (R ≥ 3.1 should work, while v3.5.1 is successfully tested):
