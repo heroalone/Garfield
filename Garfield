@@ -84,6 +84,7 @@ sub read_option {
 			'temporary|tmp=s'			=> \$option_subcmd{temporary},
 			'prefix|p=s'				=> \$option_subcmd{prefix},
 			'threads|@=i'				=> \$option_subcmd{threads},
+			'keep_negative|keep=i'		=> \$option_subcmd{keep_negative},
 		},
 		subcommands => {
 			Gene => {

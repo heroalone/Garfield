@@ -67,7 +67,7 @@ The phenotype input is a 3-column tab-delimited file with the following structur
 ...
 ```
 
-**Note:** The program considers negative values as "NA" by default and removes corresponding samples. Use "--trait_include_negative" to retain negative values as normal trait values.
+**Note:** The program considers negative values as "NA" by default and removes corresponding samples. Use "--keep_negative 0" to retain negative values as normal trait values.
 
 It is recommended to remove all samples with missing phenotype values in advance and maintain the same order of samples in both phenotype and genotype files.
 
@@ -126,6 +126,7 @@ Additional parameters in addition to above inputs:
 
   - `--rmLD2peak|-rm <float>` : Variants that show LD r2 above this level with that of the provided variant list are excluded. \[Default: 0.3\]
   - `--LDprune_rsq|-prune <float>` : Variant pruning is applied based on the given LD r2 threshold here (and the "--indep-pairwise 10 3 \<float\>" in plink with be applied); set to 1 to cancel this pruning process. \[Default: 0.9\]
+  - `--keep_negative|-keep` : Taking negative trait values as missing, o ==> no, 1 ==> yes [Default: 1].
 
   - `--help|-h` : Show detailed documentation locally, which can be run with `Garfield --help` or `Garfield <subcomand> --help`.
 
