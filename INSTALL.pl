@@ -11,7 +11,7 @@ my $dir = dirname(abs_path $0);
 
 # Get the path of cpanm
 my $cpanm_path;
-$cpanm_path = qx(which cpanm);
+$cpanm_path = qx(which cpanm 2>/dev/null);
 
 if ($? == 0 && $cpanm_path) {
 	print "use cpanm at: $cpanm_path\n";
@@ -67,9 +67,19 @@ my $r_package_output = qx(Rscript $r_package_script 2>&1);
 print "$r_package_output\n";
 
 if ($r_package_output =~ /successful/) {
-	print "All dependencies have been satisfied.\n";
-	print "Now you can take Garfield on your journey!\n";
+    print "All dependencies have been satisfied.\n";
+    print "Now you can take Garfield on your journey!\n";
+
+    if (-e "$dir/images/Garfield.ascii_art") {
+		open my $ascii_file, '<', '$dir/images/Garfield.ascii_art';
+		while (my $line = <$ascii_file>) {
+			print $line;
+		}
+		close $ascii_file;
+	}
 }
+
+
 
 sub checkINpath {
 	my ($tool_name) = @_;

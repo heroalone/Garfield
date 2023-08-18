@@ -25,7 +25,6 @@ my %option_subcmd;
 my $getOpts = &read_option();
 
 my $status = 0;
-### Version
 my $VERSION = "v0.1";
 if ($option{version}) {
 	print "Current version: $VERSION\n";
@@ -71,13 +70,6 @@ sub check_option {
 			# $check_para -> start_GeneSet(\%option_subcmd, \%option);
 		# }
 	}
-	# elsif ($sub_cmd eq "GhostRaw") {
-		# my $check_para = Garfield::GhostRaw -> new();
-		# $status = $check_para -> check_para_sub(\%option_subcmd, \%option);
-		# # if($status){
-			# # $check_para -> start_GeneSet(\%option_subcmd, \%option);
-		# # }
-	# }
 }
 
 sub read_option {
@@ -123,13 +115,6 @@ sub read_option {
 
 				}
 			},
-			# GhostRaw => {
-				# options => {
-					# 'INDpeak|I=s'			=> \$option_subcmd{INDpeak},
-					# 'extension|e=i'			=> \$option_subcmd{extension},
-					# 'rmLD2peak|rm=f'		=> \$option_subcmd{rmLD2peak},
-				# }
-			# },
 		}
 	);
 	push @{$option_subcmd{subcommand}}, @{$getOpts->{subcommand}} if exists $getOpts->{subcommand};
@@ -141,4 +126,12 @@ if($status){
 	my $time_end = Benchmark->new;
 	my $time_duration = timediff($time_end, $time_start);
 	print "DONE\! running time: ", timestr($time_duration), "\n";
+	
+	if (-e "$main_path/images/Garfield.ascii_art") {
+		open my $ascii_file, '<', '$main_path/images/Garfield.ascii_art';
+		while (my $line = <$ascii_file>) {
+			print $line;
+		}
+		close $ascii_file;
+	}
 }
