@@ -4,20 +4,13 @@ args <- commandArgs()
 PLINKFILE <- args[6]
 TRAITFILE <- args[7]
 PREFIX <- args[8]
+NONEGATIVETRAIT = as.numeric(args[9])
+
 
 # # # module load r/3.5.1-foss-2018b
-
-# BASE <- "/groups/nordborg/user/haijun.liu/gHET/rice/"
-
-# PLINKFILE="Grain_weight.10_21024000_21074000_10.10512"
-# TRAITFILE="/groups/nordborg/user/haijun.liu/gHET/rice/trait/Grain_weight.txt"
-# PREFIX="win.999"
-
-
 # FILENAME <- paste(INDEX, ".", TRAIT, ".bed", BED, sep = "")
 # PLINKFILE2 <- gsub(paste(TRAIT, ".", sep = ""), "", PLINKFILE)
 FILENAME2 <- paste(PREFIX, sep = "")
-
 
 # Function to read genotype in PLINK format
 read_plink_file <- function(PLINKFILE) {
@@ -92,16 +85,16 @@ select_top_variable2 <- function(data, maxLogic = 3) {
 # Function to write TPED file
 write_TPED <- function(CHR, FILENAME2, Value) {
 	tped_OUT <- paste(CHR, FILENAME2, "0", "1", paste(Value, Value, sep = " ", collapse = " "), sep = " ")
-	# write.table(tped_OUT, file = paste("Garfield.Geno.", ".tped", sep = ""), quote = FALSE, row.names = FALSE, col.names = FALSE, append = TRUE)
 	return(tped_OUT)
 }
 
 write_bestDNF <- function(CHR, FILENAME2, Value) {
 	dnf_OUT <- paste(CHR, FILENAME2, Value, sep = "\t")
-	# write.table(dnf_OUT, file = paste("Garfield.bestDNF.", ".txt", sep = ""), sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE, append = TRUE)
 	return(dnf_OUT)
 }
 
+
+OUT_TPED="NULL"
 # run Garfield to produce new tped and bestDNF files
 Garfield_main <- function(PLINKFILE, TRAITFILE, FILENAME2) {
 	# Read files
@@ -124,7 +117,7 @@ Garfield_main <- function(PLINKFILE, TRAITFILE, FILENAME2) {
 		if (length(importance_RF$IMP) == 0) {
 			importance_RF <- raw_importance[1, ]
 		}
-		OUT_TPED <- write_TPED(CHR, FILENAME2, genotype[, as.vector(importance_RF$variables[1])] + 1)
+		# # OUT_TPED <- write_TPED(CHR, FILENAME2, genotype[, as.vector(importance_RF$variables[1])] + 1)
 		OUT_DNF <- write_bestDNF(CHR, FILENAME2, importance_RF$variables[1])
 	} else {
 		if (length(importance_RF$IMP) > 5) {
@@ -132,7 +125,7 @@ Garfield_main <- function(PLINKFILE, TRAITFILE, FILENAME2) {
 		}
 		min_change_point <- select_top_variable(importance_RF$IMP)
 		if (min_change_point == 1) {
-			OUT_TPED <- write_TPED(CHR, FILENAME2, genotype[, as.vector(importance_RF$variables[1])] + 1)
+			# # OUT_TPED <- write_TPED(CHR, FILENAME2, genotype[, as.vector(importance_RF$variables[1])] + 1)
 			OUT_DNF <- write_bestDNF(CHR, FILENAME2, importance_RF$variables[1])
 		} else {
 			top_best <- data[, c("phe", as.vector(importance_RF$variables[1:min_change_point]))]
@@ -145,7 +138,7 @@ Garfield_main <- function(PLINKFILE, TRAITFILE, FILENAME2) {
 			predicted_genotype <- LFS$predicted_genotype
 			
 			if (nrow(vim.result) == 0 || unique(factor(predicted_genotype$predict)) == 1) {
-				OUT_TPED <- write_TPED(CHR, FILENAME2, genotype[, as.vector(importance_RF$variables[1])] + 1)
+				# # OUT_TPED <- write_TPED(CHR, FILENAME2, genotype[, as.vector(importance_RF$variables[1])] + 1)
 				OUT_DNF <- write_bestDNF(CHR, FILENAME2, importance_RF$variables[1])
 			} else {
 				if (nrow(vim.result) == 1) {
