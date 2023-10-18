@@ -66,7 +66,7 @@ Garfield Gene --genotype ./example/test.genotype \
 You should got the message below and two files in the `test` folder: `"Garfield.bestDNF.test.txt"` and `bash"Garfield.Geno.test.tped"`.
 ```bash
 DONE! running time:  x wallclock secs ( x usr x sys +  x cusr  x csys =  x CPU)
-  /\_/\    \~~~ MEOW ~~~
+  /\_/\    ~~~ MEOW ~~~
  ( o.o )
   > ^ <
 ```
