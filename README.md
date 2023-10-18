@@ -36,8 +36,6 @@ cd Garfield
 perl INSTALL.pl
 ```
 
-#### Or via `conda` (recommended)
-
 
 #### Dependencies
 The following dependencies are required and will be installed:
