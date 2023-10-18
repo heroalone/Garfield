@@ -39,7 +39,7 @@ perl INSTALL.pl
 
 #### Dependencies
 The following dependencies are required and will be installed:
-```bash
+```
 Perl modules (perl ≥ 5 should always work, while v5.32.1 is used in the present study):
   - [Pod::Usage](https://metacpan.org/dist/Pod-Usage)
   - [Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand)
@@ -63,7 +63,7 @@ Garfield Gene --genotype ./example/test.genotype \
 --threads 1
 ```
 
-You should got the message below and two files in the ```bash test``` folder: ```bash "Garfield.bestDNF.test.txt"``` and ```bash"Garfield.Geno.test.tped"```.
+You should got the message below and two files in the `test` folder: `"Garfield.bestDNF.test.txt"` and `bash"Garfield.Geno.test.tped"`.
 ```bash
 DONE! running time:  x wallclock secs ( x usr x sys +  x cusr  x csys =  x CPU)
   /\_/\    \~~~ MEOW ~~~
@@ -71,17 +71,13 @@ DONE! running time:  x wallclock secs ( x usr x sys +  x cusr  x csys =  x CPU)
   > ^ <
 ```
 
-and using these to see detailed help info at any time:
-```bash
-Garfield -h
-Garfield Gene -h
-```
+and using these to see detailed help info at any time `Garfield -h` or `Garfield Gene -h`
 
 ---
 
 ## Preparation of Input Files <a name="input"></a>
 ####  Phenotype [--trait|-t \<file\>]
-The phenotype input is a 3-column space-delimited file: FAM_ID, IND_ID, and phenotype_values
+The phenotype input is a 3-column space-delimited file: `FAM_ID`, `IND_ID`, and `phenotype_values`
 ```
 111 111 0
 222 222 1
@@ -89,7 +85,7 @@ The phenotype input is a 3-column space-delimited file: FAM_ID, IND_ID, and phen
 ...
 ```
 
-**Note:** The program by default treats negative values as missing ("NA"） and corresponding samples are removed in further analysis, which can be retaind with "--keep_negative 0".
+**Note:** The program by default treats negative values as missing ("NA"） and corresponding samples are removed in further analysis, which can be retaind with `--keep_negative 0`.
 
 It is highly recommended to remove all missing phenotypes in advance and it is necessarily to maintain sample order between genotype and phenotype files.
 
@@ -209,7 +205,7 @@ Garfield Ghost --genotype input \
 Two outcomes produced from Garfield: the pseudo-genotypes `**Garfield.Geno.\*.tped**` (plink transposed PED format) and `**Garfield.bestDNF.\*.txt**` descrbing the disjunctive normal form (DNF) of each pseudo-genotype.
 
 #### The DNF output
-is a 3-column tab-delimited file: chrom, marker ID, and DNF. For example:
+is a 3-column tab-delimited file: `chrom`, `marker ID`, and `DNF`. For example:
 ```bash
 10  trait.10_1700000_1800000_10.17 rs22 \& !rs66
 ```
@@ -222,8 +218,8 @@ This indicates the likely presence of heterogeneity between variants of rs22 and
 10 trait.10_1800000_1900000_10.18 0 1 2 2 2 2 1 1 1 1
 ```
 
-The .tfam file must be accompanied by this .tped, please copy and replace the raw .fam/.tfam file with the same base name as .tped, this can only happen when the sample order is identical between genotype and phenotype files.
-Then this genotype can be loaded into plink with --tfile, or used directly in association mapping.
+The `.tfam` file must be accompanied by this `.tped`, please copy and replace the raw `.fam/.tfam` file with the same base name as .tped, this can only happen when the sample order is identical between genotype and phenotype files.
+Then this genotype can be loaded into plink with `--tfile`, or used directly in association mapping.
 
 #### association mapping
 ```bash
@@ -243,14 +239,14 @@ A paper describing the current study is under preparation.
 ## Warranty and License <a name="license"></a>
 Please acknowledge and agree that the software is provided **AS IS**  without warranty.
 
-Garfield is released under the GPLv3 license. See the separate license file for details. Briefly, it allows copying and distribution with attribution and requiring derivative works also be open source.
+Garfield is released under the `GPLv3` license. See the separate license file for details. Briefly, it allows copying and distribution with attribution and requiring derivative works also be open source.
 
 ## Contributing <a name="contribute"></a>
 Feedbacks, comments, issues or ideas to improve Garfield are highly welcome. Several ways to contribute:
 
 #### Contact
 For questions or comments, please contact Dr. Haijun Liu: heroalone@qq.com.
-I'm also excited to hear about any new findings you may have using this software, **DO** let me know!
+I'm also excited to hear about any new findings you may have using this software, `**DO**` let me know!
 
 #### Submit Issues
 You can report any problems, bugs or feature requests on [GitHub issues](https://github.com/heroalone/Garfield/issues).
@@ -264,10 +260,10 @@ Support the project by telling others, and consider citing our upcoming paper or
 
 ## Q & A <a name="Q_A"></a>
 
-- I'm sure all the perl modules are installed sucessfully, but still got “Can't locate *.pm in @INC”.
+- I'm sure all the perl modules are installed sucessfully, but still got `Can't locate *.pm in @INC` error.
 We tried to add the module PATH into your system, obvioursly it's failed, please try to:
- 1) add ```bash use lib '/path/to/your/module/directory'; ``` into Garfield file under ```bash use strict; ```;
- 2) add the path into @INC with ```bash echo 'export PERL5LIB=$PERL5LIB:/path/to/Garfield/lib' >> ~/.bashrc ; source ~/.bashrc ```;
- 3) or simply to run it by specifying the library path with -I parameter, try: ```bash perl -I /path/to/Garfield/lib /path/to/Garfield/Garfiled Gene -h ```
+ 1) add `use lib '/path/to/your/module/directory';` into Garfield file under `use strict;`;
+ 2) add the path into @INC with `echo 'export PERL5LIB=$PERL5LIB:/path/to/Garfield/lib' >> ~/.bashrc` and `source ~/.bashrc `;
+ 3) or simply to run it by specifying the library path with `-I` parameter, try: ```perl -I /path/to/Garfield/lib /path/to/Garfield/Garfiled Gene -h ```
 
 - 
