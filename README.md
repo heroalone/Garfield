@@ -85,7 +85,7 @@ The phenotype input is a 3-column space-delimited file: `FAM_ID`, `IND_ID`, and 
 ...
 ```
 
-**Note:** The program by default treats negative values as missing ("NA"） and corresponding samples are removed in further analysis, which can be retaind with `--keep_negative 0`.
+**Note:** The program by default treats negative values as `missing ("NA"）` and corresponding samples are removed in further analysis, which can be retaind with `--keep_negative 0`.
 
 It is highly recommended to remove all missing phenotypes in advance and it is necessarily to maintain sample order between genotype and phenotype files.
 
@@ -207,7 +207,7 @@ Two outcomes produced from Garfield: the pseudo-genotypes `Garfield.Geno.*.tped`
 #### The DNF output
 is a 3-column tab-delimited file: `chrom`, `marker ID`, and `DNF`. For example:
 ```bash
-10  trait.10_17000_18000_10.17 rs22 \& !rs66
+10  trait.10_17000_18000_10.17 rs22 & !rs66
 ```
 This indicates the likely presence of heterogeneity between variants of rs22 and rs66. In this expression, the `allele 1` of rs22 and the `allele 0` of rs66 would lead to `allele 1` in the pseudo-genotype, while all the other allelic combinations of rs22 and rs66 consist of `allele 0` of the pseudo-genotype.
 
