@@ -41,14 +41,14 @@ perl INSTALL.pl
 The following dependencies are required and will be installed:
 ```bash
 Perl modules (perl ≥ 5 should always work, while v5.32.1 is used in the present study):
-  - echo "[Pod::Usage](https://metacpan.org/dist/Pod-Usage)"
-  - echo "[Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand)"
-  - echo "[Parallel::ForkManager](https://metacpan.org/pod/Parallel::ForkManager)"
+  - [Pod::Usage](https://metacpan.org/dist/Pod-Usage)
+  - [Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand)
+  - [Parallel::ForkManager](https://metacpan.org/pod/Parallel::ForkManager)
 
 R packages (R ≥ 3.1 should work, while v3.5.1 is used in the present study):
-  - echo "[genio](https://cran.r-project.org/web/packages/genio/index.html)"
-  - echo "[ranger](https://cran.r-project.org/web/packages/ranger/index.html)"
-  - echo "[logicFS](https://www.bioconductor.org/packages/release/bioc/html/logicFS.html)"
+  - [genio](https://cran.r-project.org/web/packages/genio/index.html)
+  - [ranger](https://cran.r-project.org/web/packages/ranger/index.html)
+  - [logicFS](https://www.bioconductor.org/packages/release/bioc/html/logicFS.html)
 ```
 
 #### Test the success of installation
@@ -56,14 +56,14 @@ R packages (R ≥ 3.1 should work, while v3.5.1 is used in the present study):
 Garfield Gene --genotype ./example/test.genotype \
 --trait ./example/test.trait.txt \
 --bed ./example/test.geneAnno.bed \
+--extension 20000 \
 --outdir ./test \
 --temporary ./tmp \
 --prefix test \
---threads 1 \
---extension 20000
+--threads 1
 ```
 
-You should got the message below and two files in the test folder: "Garfield.bestDNF.test.txt" and "Garfield.Geno.test.tped".
+You should got the message below and two files in the ```bash test``` folder: ```bash "Garfield.bestDNF.test.txt"``` and ```bash"Garfield.Geno.test.tped"```.
 ```bash
 DONE! running time:  x wallclock secs ( x usr x sys +  x cusr  x csys =  x CPU)
   /\_/\    \~~~ MEOW ~~~
@@ -206,14 +206,14 @@ Garfield Ghost --genotype input \
 
 
 ## Understanding of Outputs <a name="output"></a>
-Two outcomes produced from Garfield: the pseudo-genotypes Garfield.Geno.\*.tped (plink transposed PED format) and Garfield.bestDNF.\*.txt descrbing the disjunctive normal form (DNF) of each pseudo-genotype.
+Two outcomes produced from Garfield: the pseudo-genotypes `**Garfield.Geno.\*.tped**` (plink transposed PED format) and `**Garfield.bestDNF.\*.txt**` descrbing the disjunctive normal form (DNF) of each pseudo-genotype.
 
 #### The DNF output
 is a 3-column tab-delimited file: chrom, marker ID, and DNF. For example:
 ```bash
 10  trait.10_1700000_1800000_10.17 rs22 \& !rs66
 ```
-This indicates the likely presence of heterogeneity between variants of rs22 and rs66. In this expression, the allele 1 of rs22 and the allele 0 of rs66 would lead to allele 1 in the pseudo-genotype, while all the other allelic combinations of rs22 and rs66 consist of allele 0 of the pseudo-genotype.
+This indicates the likely presence of heterogeneity between variants of rs22 and rs66. In this expression, the `allele 1` of rs22 and the `allele 0` of rs66 would lead to `allele 1` in the pseudo-genotype, while all the other allelic combinations of rs22 and rs66 consist of `allele 0` of the pseudo-genotype.
 
 #### The .tped genotype file 
 2N+4 space-delimited, where N represents the sample size. Each row is for one variant, with the first four fields `[chrom, marker_ID, genetic position (cM, mark 0 if unknown), genomic/physical coordinate]`, and the following each two fields are genotypes for each sample listed in the .tfam file. The genomic positions are all 1 by default, you can modify it by one of the marker or the start of each gene/window. Here's an example for two variants in four samples:
