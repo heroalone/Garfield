@@ -80,8 +80,6 @@ if ($r_package_output =~ /successful/) {
 	}
 }
 
-
-
 sub checkINpath {
 	my ($tool_name) = @_;
 	my @path_dirs = split /:/, $ENV{PATH};
@@ -92,3 +90,8 @@ sub checkINpath {
 	}
 	return undef;
 }
+
+# system(qq(echo 'export PERL5LIB="\$PERL5LIB:$(dir)/lib"' >> ~/.bashrc));
+system(qq(echo 'export PERL5LIB="\\\$PERL5LIB:$(dir)/lib"' >> ~/.bashrc));
+system("source ~/.bashrc");
+
