@@ -71,7 +71,7 @@ DONE! running time:  x wallclock secs ( x usr x sys +  x cusr  x csys =  x CPU)
   > ^ <
 ```
 
-and using these to see detailed help info at any time `Garfield -h` or `Garfield Gene -h`
+and to see detailed help info at any time: `Garfield -h` or `Garfield Gene -h`.
 
 ---
 
@@ -123,24 +123,24 @@ plink --vcf input.vcf.gz \
 `--geneset <gene.set>` : Tab-delimited text file listing two or more gene IDs per row that will be analyzed together.
 
 #### variant list (e.g. GWAS peaks)
-`--INDpeak <gwaspeak.list>` : A list of one-column markers, which should be present in the genotype .bim file.
+`--INDpeak <gwaspeak.list>` : A list of one-column markers, which should be present in the genotype `.bim` file.
 
 
 ## Options <a name="option"></a>
 Additional parameters in addition to above inputs:
 
-  - `--extension|-e <int>` : Extension of intervals for each flanking of gene. \[Default: 50000\]
-  - `--outdir|-o <string>` : Specify the directory of outputs. \[default: ./\]
-  - `--prefix|-p <string>` : Specify the prefix of output pseudo-genotypes. \[default: genotype_phenotype_subcommand\]
-  - `--temporary|-tmp <string>` : Specify the temporary directory for intermediate processing. \[default: ./tmp\]
-  - `--threads|-@ <int>` : Specify the threads that can be used. \[default: 1\]
-  - `--window|-w <int>` : Window size of each sliding window. \[Default: 50000\]
-  - `--step|-s <int>` : Step size of each sliding window. \[Default: 25000\]
-  - `--INDpeak <gwaspeak.list>` : A list of markers, only one column and the name should be present in the genotype .bim file.
+  - `--extension|-e <int>` : Extension of intervals for each flanking of gene. \[`Default: 50000`\]
+  - `--outdir|-o <string>` : Specify the directory of outputs. \[`Default: ./`\]
+  - `--prefix|-p <string>` : Specify the prefix of output pseudo-genotypes. \[`Default: genotype_phenotype_subcommand`\]
+  - `--temporary|-tmp <string>` : Specify the temporary directory for intermediate processing. \[`Default: ./tmp`\]
+  - `--threads|-@ <int>` : Specify the threads that can be used. \[`Default: 1`\]
+  - `--window|-w <int>` : Window size of each sliding window. \[`Default: 50000`\]
+  - `--step|-s <int>` : Step size of each sliding window. \[`Default: 25000`\]
+  - `--INDpeak <gwaspeak.list>` : A list of markers, only one column and the name should be present in the genotype ``.bim`` file.
 
-  - `--rmLD2peak|-rm <float>` : Variants that show LD r2 above this level with that of the provided variant list are excluded. \[Default: 0.3\]
-  - `--LDprune_rsq|-prune <float>` : Variant pruning is applied based on the given LD r2 threshold here (and the "--indep-pairwise 10 3 \<float\>" in plink with be applied); set to 1 to cancel this pruning process. \[Default: 0.9\]
-  - `--keep_negative|-keep` : Taking negative trait values as missing, o ==> no, 1 ==> yes [Default: 1].
+  - `--rmLD2peak|-rm <float>` : Variants that show LD r2 above this level with that of the provided variant list are excluded. \[`Default: 0.3`\]
+  - `--LDprune_rsq|-prune <float>` : Variant pruning is applied based on the given LD r2 threshold here (and the `"--indep-pairwise 10 3 \<float\>"` in plink with be applied); set to `1` to cancel this pruning process. \[`Default: 0.9`\]
+  - `--keep_negative|-keep` : Taking negative trait values as missing, `o` ==> no, `1` ==> yes [`Default: 1`].
 
   - `--help|-h` : Show detailed documentation locally, which can be run with `Garfield --help` or `Garfield <subcomand> --help`.
 
