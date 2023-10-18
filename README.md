@@ -56,14 +56,13 @@ The following dependencies are required and will be installed:
 
 
 ## Preparation of Input Files <a name="input"></a>
-
 ####  Phenotype [--trait|-t \<file\>]
 
-The phenotype input is a 3-column tab-delimited file with the following structure (FAM_ID, IND_ID, and values):
+The phenotype input is a 3-column space-delimited file with the following structure (FAM_ID, IND_ID, and values):
 ```
-111    111    0
-222    222    1
-333    333    0
+111 111 0
+222 222 1
+333 333 0
 ...
 ```
 
@@ -78,7 +77,11 @@ It is recommended to remove all samples with missing phenotype values in advance
 The genotype should be in [PLINK binary format](https://www.cog-genomics.org/plink/1.9/formats#bed): `file.bed`, `file.bim` and `file.fam`. You can easily convert other formats into it, for example from VCF:
 
 ```bash
-plink --vcf input.vcf.gz --keep sample_overlap_with_trait.txt --indiv-sort file test_trait.txt --maf 0.02 --make-bed --out output
+plink --vcf input.vcf.gz \
+--keep sample_overlap_with_trait.txt \
+--indiv-sort file test_trait.txt \
+--maf 0.02 --make-bed \
+--out output
 ```
 
   - `--vcf` : filename of input vcf
@@ -137,58 +140,81 @@ Additional parameters in addition to above inputs:
 Garfield includes 4 subcommands:
 
 #### Gene
-
 ```bash
-Garfield Gene --genotype input --trait trait --output output --temporary ./tmp --prefix gene2trait.test --threads 2 --bed gene.bed --extension 20000
+Garfield Gene --genotype input \
+--trait phenotype.txt \
+--output output \
+--temporary ./tmp \
+--prefix gene2trait.test \
+--threads 2 \
+--bed gene.bed \
+--extension 20000
 ```
 
 #### Window
 
 ```bash
-Garfield Window --genotype input --trait trait --output output --temporary ./tmp --prefix window.trait.test --threads 5 --faidx fasta.fai --window 50000 --step 20000
+Garfield Window --genotype input \
+--trait phenotype.txt \
+--output output \
+--temporary ./tmp \
+--prefix window.trait.test \
+--threads 5 \
+--faidx fasta.fai \
+--window 50000 \
+--step 20000
 ```
 
 #### GeneSet
 
 ```bash
-Garfield GeneSet --genotype input --trait trait --output output --temporary ./tmp --prefix geneSet.trait.test --threads 2 --bed gene.bed --geneset genepairs.txt --extension 20000
+Garfield GeneSet --genotype input \
+--trait phenotype.txt \
+--output output \
+--temporary ./tmp \
+--prefix geneSet.trait.test \
+--threads 2 \
+--bed gene.bed \
+--geneset genepairs.txt \
+--extension 20000
 ```
 
 #### Ghost
 
 ```bash
-Garfield Ghost --genotype input --INDpeak gwas.peaks --extension 100000 --rmLD2peak 0.3 --LDprune_rsq 0.9 --output output --temporary ./tmp --prefix test2peak --threads 5
+Garfield Ghost --genotype input \
+--INDpeak gwas.peaks \
+--extension 100000 \
+--rmLD2peak 0.3 \
+--LDprune_rsq 0.9 \
+--output output \
+--temporary ./tmp \
+--prefix test2peak \
+--threads 5
 ```
 
 ## How to cite <a name="cite"></a>
-
 A paper describing the current study is under preparation.
 
 ## Warranty and License <a name="license"></a>
-
 You acknowledge and agree that the software is provided to you on an **AS IS** basis, without warranty of any kind, express or implied.
 
 Garfield is released under the GPLv3 license. See the separate license file for details. Briefly, it allows users to legally copy, distribute, and modify. However, any distribution of derivative code must also be open source and abide by the same GPLv3 agreement.
 
 ## Contributing <a name="contribute"></a>
-
 Any feedback, comments, suggestions or contributions to help improve Garfield is highly welcome. If you have encountered any issues or have ideas for new features, please let me know. A few ways to contribute:
 
-#### Contact the Developers
-
-For questions or comments, please contact the lead developer Dr. Haijun Liu: haijun.liu@gmi.oeaw.ac.at.  
+#### Contact
+For questions or comments, please contact the Dr. Haijun Liu: haijun.liu@gmi.oeaw.ac.at.  
 I'm also excited to hear about any new findings you may have using this software, **DO** let me know!
 
 #### Submit Issues
-
 You can report any problems, bugs or feature requests directly on our [GitHub issues page](https://github.com/heroalone/Garfield/issues).
 
 #### Contribute Code
-
 If you would like to contribute code, please fork the repo and submit a pull request. Any contributions, large or small, are greatly appreciated. You can also reach out if you would like to be added as a collaborator.
 
 #### Spread the Word
-
 Another way to support the project is to tell others about Garfield. If you find it useful in your own research, please consider citing our upcoming paper or mentioning Garfield in your publications and presentations.
 
 
@@ -196,5 +222,3 @@ Another way to support the project is to tell others about Garfield. If you find
 
 - 
 - 
-- 
-
