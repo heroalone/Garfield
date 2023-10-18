@@ -40,15 +40,15 @@ perl INSTALL.pl
 #### Dependencies
 The following dependencies are required and will be installed:
 ```bash
-1. Perl modules (perl ≥ 5 should always work, while v5.32.1 is used in the present study):
-    - [Pod::Usage](https://metacpan.org/dist/Pod-Usage)
-    - [Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand)
-    - [Parallel::ForkManager](https://metacpan.org/pod/Parallel::ForkManager)
+Perl modules (perl ≥ 5 should always work, while v5.32.1 is used in the present study):
+  - echo "[Pod::Usage](https://metacpan.org/dist/Pod-Usage)"
+  - echo "[Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand)"
+  - echo "[Parallel::ForkManager](https://metacpan.org/pod/Parallel::ForkManager)"
 
-2. R packages (R ≥ 3.1 should work, while v3.5.1 is used in the present study):
-    - [genio](https://cran.r-project.org/web/packages/genio/index.html)
-    - [ranger](https://cran.r-project.org/web/packages/ranger/index.html)
-    - [logicFS](https://www.bioconductor.org/packages/release/bioc/html/logicFS.html)
+R packages (R ≥ 3.1 should work, while v3.5.1 is used in the present study):
+  - echo "[genio](https://cran.r-project.org/web/packages/genio/index.html)"
+  - echo "[ranger](https://cran.r-project.org/web/packages/ranger/index.html)"
+  - echo "[logicFS](https://www.bioconductor.org/packages/release/bioc/html/logicFS.html)"
 ```
 
 #### Test the success of installation
@@ -65,21 +65,13 @@ Garfield Gene --genotype ./example/test.genotype \
 
 You should got the message below and two files in the test folder: "Garfield.bestDNF.test.txt" and "Garfield.Geno.test.tped".
 ```bash
-DONE! running time:  * wallclock secs ( * usr * sys +  * cusr  * csys =  * CPU)
-
- ██████╗  █████╗ ██████╗ ███████╗██╗███████╗██╗     ██████╗
-██╔════╝ ██╔══██╗██╔══██╗██╔════╝██║██╔════╝██║     ██╔══██╗
-██║  ███╗███████║██████╔╝█████╗  ██║█████╗  ██║     ██║  ██║
-██║   ██║██╔══██║██╔══██╗██╔══╝  ██║██╔══╝  ██║     ██║  ██║
-╚██████╔╝██║  ██║██║  ██║██║     ██║███████╗███████╗██████╔╝
- ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚══════╝╚═════╝
-
+DONE! running time:  x wallclock secs ( x usr x sys +  x cusr  x csys =  x CPU)
   /\_/\    \~~~ MEOW ~~~
  ( o.o )
   > ^ <
 ```
 
-and using these commands to see detailed help info:
+and using these to see detailed help info at any time:
 ```bash
 Garfield -h
 Garfield Gene -h
