@@ -139,8 +139,8 @@ Additional parameters in addition to above inputs:
   - `--INDpeak <gwaspeak.list>` : A list of markers, only one column and the name should be present in the genotype ``.bim`` file.
 
   - `--rmLD2peak|-rm <float>` : Variants that show LD r2 above this level with that of the provided variant list are excluded. \[`Default: 0.3`\]
-  - `--LDprune_rsq|-prune <float>` : Variant pruning is applied based on the given LD r2 threshold here (and the `"--indep-pairwise 10 3 \<float\>"` in plink with be applied); set to `1` to cancel this pruning process. \[`Default: 0.9`\]
-  - `--keep_negative|-keep` : Taking negative trait values as missing, `o` ==> no, `1` ==> yes [`Default: 1`].
+  - `--LDprune_rsq|-prune <float>` : Variant pruning is applied based on the given LD r2 threshold here (and the `--indep-pairwise 10 3 r2` in plink with be applied); set to `1` to cancel this pruning process. \[`Default: 0.9`\]
+  - `--keep_negative|-keep` : Taking negative trait values as missing, `o`(zero) ==> no, `1` ==> yes [`Default: 1`].
 
   - `--help|-h` : Show detailed documentation locally, which can be run with `Garfield --help` or `Garfield <subcomand> --help`.
 
@@ -202,20 +202,20 @@ Garfield Ghost --genotype input \
 
 
 ## Understanding of Outputs <a name="output"></a>
-Two outcomes produced from Garfield: the pseudo-genotypes `**Garfield.Geno.\*.tped**` (plink transposed PED format) and `**Garfield.bestDNF.\*.txt**` descrbing the disjunctive normal form (DNF) of each pseudo-genotype.
+Two outcomes produced from Garfield: the pseudo-genotypes `Garfield.Geno.*.tped` (plink transposed PED format) and `Garfield.bestDNF.*.txt` descrbing the disjunctive normal form (DNF) of each pseudo-genotype.
 
 #### The DNF output
 is a 3-column tab-delimited file: `chrom`, `marker ID`, and `DNF`. For example:
 ```bash
-10  trait.10_1700000_1800000_10.17 rs22 \& !rs66
+10  trait.10_17000_18000_10.17 rs22 \& !rs66
 ```
 This indicates the likely presence of heterogeneity between variants of rs22 and rs66. In this expression, the `allele 1` of rs22 and the `allele 0` of rs66 would lead to `allele 1` in the pseudo-genotype, while all the other allelic combinations of rs22 and rs66 consist of `allele 0` of the pseudo-genotype.
 
 #### The .tped genotype file 
 2N+4 space-delimited, where N represents the sample size. Each row is for one variant, with the first four fields `[chrom, marker_ID, genetic position (cM, mark 0 if unknown), genomic/physical coordinate]`, and the following each two fields are genotypes for each sample listed in the .tfam file. The genomic positions are all 1 by default, you can modify it by one of the marker or the start of each gene/window. Here's an example for two variants in four samples:
 ```bash
-10 trait.10_1700000_1800000_10.17 0 1 1 1 2 2 1 1 2 2
-10 trait.10_1800000_1900000_10.18 0 1 2 2 2 2 1 1 1 1
+10 trait.10_17000_18000_10.17 0 1 1 1 2 2 1 1 2 2
+10 trait.10_18000_19000_10.18 0 1 2 2 2 2 1 1 1 1
 ```
 
 The `.tfam` file must be accompanied by this `.tped`, please copy and replace the raw `.fam/.tfam` file with the same base name as .tped, this can only happen when the sample order is identical between genotype and phenotype files.
@@ -245,8 +245,8 @@ Garfield is released under the `GPLv3` license. See the separate license file fo
 Feedbacks, comments, issues or ideas to improve Garfield are highly welcome. Several ways to contribute:
 
 #### Contact
-For questions or comments, please contact Dr. Haijun Liu: heroalone@qq.com.
-I'm also excited to hear about any new findings you may have using this software, `**DO**` let me know!
+For questions or comments, please contact Dr. Haijun Liu: heroalone@qq.com
+I'm also excited to hear about any new findings you may have using this software, **DO** let me know!
 
 #### Submit Issues
 You can report any problems, bugs or feature requests on [GitHub issues](https://github.com/heroalone/Garfield/issues).
@@ -261,9 +261,10 @@ Support the project by telling others, and consider citing our upcoming paper or
 ## Q & A <a name="Q_A"></a>
 
 - I'm sure all the perl modules are installed sucessfully, but still got `Can't locate *.pm in @INC` error.
-We tried to add the module PATH into your system, obvioursly it's failed, please try to:
- 1) add `use lib '/path/to/your/module/directory';` into Garfield file under `use strict;`;
- 2) add the path into @INC with `echo 'export PERL5LIB=$PERL5LIB:/path/to/Garfield/lib' >> ~/.bashrc` and `source ~/.bashrc `;
- 3) or simply to run it by specifying the library path with `-I` parameter, try: ```perl -I /path/to/Garfield/lib /path/to/Garfield/Garfiled Gene -h ```
+
+  We tried to add the module PATH into your system, obvioursly it's failed, please try to:
+  1) add `use lib '/path/to/your/module/directory';` into Garfield file under `use strict;`;
+  2) add the path into @INC with `echo 'export PERL5LIB=$PERL5LIB:/path/to/Garfield/lib' >> ~/.bashrc` and `source ~/.bashrc `;
+  3) or simply to run it by specifying the library path with `-I` parameter, try: ```perl -I /path/to/Garfield/lib /path/to/Garfield/Garfiled Gene -h ```
 
 - 
