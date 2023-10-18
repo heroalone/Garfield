@@ -39,7 +39,7 @@ perl INSTALL.pl
 
 #### Dependencies
 The following dependencies are required and will be installed:
-
+```bash
 1. Perl modules (perl ≥ 5 should always work, while v5.32.1 is used in the present study):
     - [Pod::Usage](https://metacpan.org/dist/Pod-Usage)
     - [Getopt::Long::Subcommand](https://metacpan.org/pod/Getopt::Long::Subcommand)
@@ -49,14 +49,10 @@ The following dependencies are required and will be installed:
     - [genio](https://cran.r-project.org/web/packages/genio/index.html)
     - [ranger](https://cran.r-project.org/web/packages/ranger/index.html)
     - [logicFS](https://www.bioconductor.org/packages/release/bioc/html/logicFS.html)
-
----
+```
 
 #### Test the success of installation
 ```bash
-Garfield -h
-Garfield Gene -h
-
 Garfield Gene --genotype ./example/test.genotype \
 --trait ./example/test.trait.txt \
 --bed ./example/test.geneAnno.bed \
@@ -67,6 +63,29 @@ Garfield Gene --genotype ./example/test.genotype \
 --extension 20000
 ```
 
+You should got the message below and two files in the test folder: "Garfield.bestDNF.test.txt" and "Garfield.Geno.test.tped".
+```bash
+DONE! running time:  * wallclock secs ( * usr * sys +  * cusr  * csys =  * CPU)
+
+ ██████╗  █████╗ ██████╗ ███████╗██╗███████╗██╗     ██████╗
+██╔════╝ ██╔══██╗██╔══██╗██╔════╝██║██╔════╝██║     ██╔══██╗
+██║  ███╗███████║██████╔╝█████╗  ██║█████╗  ██║     ██║  ██║
+██║   ██║██╔══██║██╔══██╗██╔══╝  ██║██╔══╝  ██║     ██║  ██║
+╚██████╔╝██║  ██║██║  ██║██║     ██║███████╗███████╗██████╔╝
+ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚══════╝╚═════╝
+
+  /\_/\    \~~~ MEOW ~~~
+ ( o.o )
+  > ^ <
+```
+
+and using these commands to see detailed help info:
+```bash
+Garfield -h
+Garfield Gene -h
+```
+
+---
 
 ## Preparation of Input Files <a name="input"></a>
 ####  Phenotype [--trait|-t \<file\>]
@@ -224,6 +243,7 @@ emmax -t BASE_of_tped \
 -d 3
 ```
 
+---
 
 ## How to cite <a name="cite"></a>
 A paper describing the current study is under preparation.
