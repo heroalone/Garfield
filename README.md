@@ -29,7 +29,7 @@ Conventional genetic association analysis often assumes a single causal factor u
 
 ## Installation <a name="install"></a>
 
-#### download and install locally
+#### Download and install locally
 ```bash
 git clone git@github.com:heroalone/Garfield.git
 cd Garfield
@@ -221,7 +221,7 @@ This indicates the likely presence of heterogeneity between variants of rs22 and
 The `.tfam` file must be accompanied by this `.tped`, please copy and replace the raw `.fam/.tfam` file with the same base name as .tped, this can only happen when the sample order is identical between genotype and phenotype files.
 Then this genotype can be loaded into plink with `--tfile`, or used directly in association mapping.
 
-#### association mapping
+#### association mapping with EMMAX
 ```bash
 emmax -t BASE_of_tped \
 -k file_of_kinship \
@@ -237,7 +237,7 @@ emmax -t BASE_of_tped \
 A paper describing the current study is under preparation.
 
 ## Warranty and License <a name="license"></a>
-Please acknowledge and agree that the software is provided **AS IS**  without warranty.
+Please acknowledge and agree that the software is provided **`AS IS`**  without warranty.
 
 Garfield is released under the `GPLv3` license. See the separate license file for details. Briefly, it allows copying and distribution with attribution and requiring derivative works also be open source.
 
@@ -246,7 +246,7 @@ Feedbacks, comments, issues or ideas to improve Garfield are highly welcome. Sev
 
 #### Contact
 For questions or comments, please contact Dr. Haijun Liu: heroalone@qq.com
-I'm also excited to hear about any new findings you may have using this software, **DO** let me know!
+I'm also excited to hear about any new findings you may have using this software, **`DO`** let me know!
 
 #### Submit Issues
 You can report any problems, bugs or feature requests on [GitHub issues](https://github.com/heroalone/Garfield/issues).
