@@ -195,11 +195,11 @@ sub RUN_Ghost {
 			system("cut -d ' ' -f 1,2,7 ${plinkfile}.peak.raw | sed '1d' > ${plinkfile}.trait");
 
 			if ($LD_prune < 1 && -e "$plinkfile.rmLD.prune.bim") {
-				process_Ghost_Detail("$plinkfile", 0, $out_tped_fh, $out_dnf_fh);
+				process_Ghost_Detail("$plinkfile", 0, $out_tped_fh, $out_dnf_fh, $keep_negative);
 			}
 
 			if ($LD_prune == 1 && -e "$plinkfile.rmLD.bim") {
-				process_Ghost_Detail("$plinkfile", 1, $out_tped_fh, $out_dnf_fh);
+				process_Ghost_Detail("$plinkfile", 1, $out_tped_fh, $out_dnf_fh, $keep_negative);
 			}
 
 		}
@@ -226,7 +226,7 @@ sub function_process_Garfield {
 
 # Common processing for each case
 sub process_Ghost_Detail {
-    my ($plink_file_prefix, $ld_prune_flag, $out_tped_fh, $out_dnf_fh) = @_;
+    my ($plink_file_prefix, $ld_prune_flag, $out_tped_fh, $out_dnf_fh, $keep_negative) = @_;
     
     my $ld_file_suffix = ($ld_prune_flag == 1) ? "rmLD" : "rmLD.prune";
     
@@ -234,7 +234,7 @@ sub process_Ghost_Detail {
     my $retry_count = 0;
 
     while ($retry_count < $max_retries) {
-        ($result_TPED, $result_DNF) = function_process_Garfield("$plink_file_prefix.$ld_file_suffix", "$plinkfile.trait", "$plinkname", "$keep_negative");
+        ($result_TPED, $result_DNF) = function_process_Garfield("$plink_file_prefix.$ld_file_suffix", "$plink_file_prefix.trait", "$out_tped_fh", "$keep_negative");
         $result_TPED =~ s/1\.5 1\.5/0 0/g if $result_TPED =~ /1\.5/;
         last if defined $result_TPED;
         $retry_count++;
@@ -252,7 +252,7 @@ sub process_Ghost_Detail {
 		}
 	}
 	else {
-		warn "Error processing: $ID\n";
+		warn "Error processing: $plink_file_prefix\n";
 	}
 
 }

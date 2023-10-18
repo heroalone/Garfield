@@ -157,7 +157,7 @@ sub RUN_Gene {
 				}
 			}
 			else {
-				warn "Error processing: $ID\n";
+				warn "Error processing: $plinkname\n";
 			}
 		}
 		# # # Delete temporary files
