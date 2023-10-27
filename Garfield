@@ -45,30 +45,18 @@ sub check_option {
 	if ($sub_cmd eq "Gene") {
 		my $check_para = Garfield::Gene -> new();
 		$status = $check_para -> check_para_sub(\%option_subcmd, \%option);
-		# if($status){
-			# $check_para -> start_Gene(\%option_subcmd, \%option);
-		# }
 	}
 	elsif ($sub_cmd eq "Window") {
 		my $check_para = Garfield::Window -> new();
 		$status = $check_para -> check_para_sub(\%option_subcmd, \%option);
-		# if($status){
-			# $check_para -> start_Window(\%option_subcmd, \%option);
-		# }
 	}
 	elsif ($sub_cmd eq "GeneSet") {
 		my $check_para = Garfield::GeneSet -> new();
 		$status = $check_para -> check_para_sub(\%option_subcmd, \%option);
-		# if($status){
-			# $check_para -> start_GeneSet(\%option_subcmd, \%option);
-		# }
 	}
 	elsif ($sub_cmd eq "Ghost") {
 		my $check_para = Garfield::Ghost -> new();
 		$status = $check_para -> check_para_sub(\%option_subcmd, \%option);
-		# if($status){
-			# $check_para -> start_GeneSet(\%option_subcmd, \%option);
-		# }
 	}
 }
 
