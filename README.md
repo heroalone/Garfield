@@ -2,7 +2,7 @@
 <table>
 <tr>
 <td width="21%">
-<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="140" height="140">
+<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="145" height="140">
 </td>
 <td width="79%">
 <h1> Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions</h1>
