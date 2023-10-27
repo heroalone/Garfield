@@ -29,11 +29,22 @@ Conventional genetic association analysis often assumes a single causal factor u
 
 ## Installation <a name="install"></a>
 
+Before installation, make sure Perl, R, and [Plink, v1.9](https://www.cog-genomics.org/plink/) have been already installed and added to $PATH.
+Check by `which perl`, `which R`, and `which plink`, and the specific paths should be correctly returned.
+
 #### Download and install locally
 ```bash
 git clone git@github.com:heroalone/Garfield.git
 cd Garfield
 perl INSTALL.pl
+```
+
+Check `which Garfield` to see the current path should be returned; otherwise, run below manually:
+```bash
+currentdir=$(pwd)
+export PERL5LIB="$PERL5LIB:$currentdir/lib" >> ~/.bashrc;
+export PATH="$PATH:$currentdir" >> ~/.bashrc;
+source ~/.bashrc
 ```
 
 
@@ -49,8 +60,6 @@ R packages (R ≥ 3.1 should work, while v3.5.1 is used in the present study):
   - [genio](https://cran.r-project.org/web/packages/genio/index.html)
   - [ranger](https://cran.r-project.org/web/packages/ranger/index.html)
   - [logicFS](https://www.bioconductor.org/packages/release/bioc/html/logicFS.html)
-
-[Plink, v1.9](https://www.cog-genomics.org/plink/), please download and add it to your $PATH.
 ```
 
 #### Test the success of installation
