@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+
 use strict;
 use warnings;
 use File::Basename;
@@ -91,8 +92,9 @@ sub checkINpath {
 	return undef;
 }
 
-# system(qq(echo 'export PERL5LIB="\$PERL5LIB:$(dir)/lib"' >> ~/.bashrc));
+system(qq(echo 'export PERL5LIB="\$PERL5LIB:$dir\/lib"' >> ~/.bashrc));
+system(qq(echo 'export PATH="\$PATH:$dir"' >> ~/.bashrc));
 # system(qq(echo 'export PERL5LIB="\\\$PERL5LIB:$dir/lib"' >> ~/.bashrc));
-system(qq(echo 'export PERL5LIB="$PERL5LIB:$dir/lib"' >> ~/.bashrc));
+# system(qq(echo 'export PERL5LIB="\\\$PERL5LIB:$dir\/lib:"' >> ~/.bashrc));
 system("source ~/.bashrc");
 
