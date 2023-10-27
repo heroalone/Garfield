@@ -92,6 +92,7 @@ sub checkINpath {
 }
 
 # system(qq(echo 'export PERL5LIB="\$PERL5LIB:$(dir)/lib"' >> ~/.bashrc));
-system(qq(echo 'export PERL5LIB="\\\$PERL5LIB:$(dir)/lib"' >> ~/.bashrc));
+# system(qq(echo 'export PERL5LIB="\\\$PERL5LIB:$dir/lib"' >> ~/.bashrc));
+system(qq(echo 'export PERL5LIB="$PERL5LIB:$dir/lib"' >> ~/.bashrc));
 system("source ~/.bashrc");
 

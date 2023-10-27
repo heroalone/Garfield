@@ -2,7 +2,7 @@
 <table>
 <tr>
 <td width="21%">
-<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="147" height="147">
+<img src="images/Garfield_logo_new.png" alt="Garfield Logo" width="100" height="100">
 </td>
 <td width="79%">
 <h1> Garfield: Genetic Association by Random Forest and InterpretivE Logic Decisions</h1>
@@ -49,6 +49,8 @@ R packages (R ≥ 3.1 should work, while v3.5.1 is used in the present study):
   - [genio](https://cran.r-project.org/web/packages/genio/index.html)
   - [ranger](https://cran.r-project.org/web/packages/ranger/index.html)
   - [logicFS](https://www.bioconductor.org/packages/release/bioc/html/logicFS.html)
+
+[Plink, v1.9](https://www.cog-genomics.org/plink/), please download and add it to your $PATH.
 ```
 
 #### Test the success of installation
@@ -150,15 +152,16 @@ Additional parameters in addition to above inputs:
 
 Garfield includes 4 subcommands:
 #### Gene (based on genes, each with extending 20Kb flanking regions)
+Example:
 ```bash
-Garfield Gene --genotype input \
---trait phenotype.txt \
---outdir output \
+Garfield Gene --genotype ./example/test.genotype \
+--trait ./example/test.trait.txt \
+--bed ./example/test.geneAnno.bed \
+--extension 20000 \
+--outdir ./test \
 --temporary ./tmp \
---prefix gene2trait.test \
---threads 2 \
---bed gene.bed \
---extension 20000
+--prefix test \
+--threads 1
 ```
 
 #### Window (based on sliding windows, with window size of 50Kb and step 20Kb)
@@ -188,16 +191,17 @@ Garfield GeneSet --genotype input \
 ```
 
 #### Ghost (analyze potential synthetic association using genotype as phenotype for given variants)
+Example:
 ```bash
-Garfield Ghost --genotype input \
---INDpeak gwas.peaks \
+Garfield Ghost --genotype ./example/test.human1000 \
+--INDpeak ./example/test.peak.list \
 --extension 100000 \
 --rmLD2peak 0.3 \
---LDprune_rsq 0.9 \
---outdir output \
---temporary ./tmp \
---prefix test2peak \
---threads 5
+--LDprune_rsq 1 \
+--outdir output.gwas \
+--temporary tmp.gwas \
+--prefix test_SA \
+--threads 1
 ```
 
 
@@ -219,7 +223,7 @@ This indicates the likely presence of heterogeneity between variants of rs22 and
 ```
 
 The `.tfam` file must be accompanied by this `.tped`, please copy and replace the raw `.fam/.tfam` file with the same base name as .tped, this can only happen when the sample order is identical between genotype and phenotype files.
-Then this genotype can be loaded into plink with `--tfile`, or used directly in association mapping.
+Then this genotype can be used directly in association mapping, or loaded into plink with `--tfile`, to caculate the LD with other variants and so forth.
 
 #### association mapping with EMMAX
 ```bash
