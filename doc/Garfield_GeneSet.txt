@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Garfield - Genetic Association by Random Forest and InterpretivE Logic Decisions, helps to identify genetic heterogeneity and various interaction effcts.
+Garfield - Genetic Association by Random Forest and InterpretivE Logic Decisions, helps to identify genetic heterogeneity and various interaction effects.
 
 =head1 SYNOPSIS
 

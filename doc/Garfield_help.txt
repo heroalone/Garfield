@@ -58,67 +58,12 @@ Run Garfield based on sliding windows of the genome.
 
 Run Garfield based on given gene sets.
 
-=back
+=item B<Ghost>
 
-=head1 SPECIFIC OPTIONS FOR SUBCOMMAND: Gene
-
-=over 8
-
-=item B<--bed|-b [required]>
-
-.bed file with coordinates and gene names, with the first four columns as [chrom start end gene_id]
-
-=item B<--extension|-e [optional]>
-
-Extension of intervals for each flanking of gene. [Default: 50000]
+Run Garfield to search potential synthetic association to GWAS peaks.
 
 =back
 
-=head1 SPECIFIC OPTIONS FOR SUBCOMMAND: Window
-
-=over 8
-
-=item B<--faidx|-f [required]>
-
-.fai (fasta index) or .genome file with coordinates for each chromosome, with the first two columns as [chrom length]
-
-=item B<--window|-w [optional]>
-
-Window size of each sliding window. [Default: 50000]
-
-=item B<--step|-s [optional]>
-
-Step size of each sliding window. [Default: 25000]
-
-=back
-
-=head1 SPECIFIC OPTIONS FOR SUBCOMMAND: GeneSet
-
-=over 8
-
-=item B<--bed|-b [required]>
-
-.bed file with coordinates and gene names, with the first four columns as [chrom start end gene_id]
-
-=item B<--geneset|-gs [required]>
-
-Tab-delimited text file with each row listing two or more gene_ids. [gene_id1 --tab-- gene_id2]
-
-=item B<--extension|-e [optional]>
-
-Extension of intervals for each flanking of gene. [Default: 25000]
-
-=back
-
-=head1 EXAMPLES
-
-Run Garfield by Gene:
-  Garfield Gene --genotype input --trait trait --output output --temporary ./tmp --prefix gene.trait.test --threads 2 --bed gene.bed --extension 20000
-
-Run Garfield by Window:
-  Garfield Window --genotype input --trait trait --output output --temporary ./tmp --prefix window.trait.test --threads 2 --faidx fasta.fai --window 50000 --step 20000
-
-Run Garfield by GeneSet:
-  Garfield GeneSet --genotype input --trait trait --output output --temporary ./tmp --prefix geneSet.trait.test --threads 2 --bed gene.bed --geneset genepairs.txt --extension 20000
+=head1 SPECIFIC OPTIONS FOR EACH SUBCOMMAND: Garfield SUBCOMMAND --help/-h
 
 =cut
