@@ -226,19 +226,19 @@ sub function_process_Garfield {
 
 # Common processing for each case
 sub process_Ghost_Detail {
-    my ($plink_file_prefix, $ld_prune_flag, $out_tped_fh, $out_dnf_fh, $keep_negative) = @_;
-    
-    my $ld_file_suffix = ($ld_prune_flag == 1) ? "rmLD" : "rmLD.prune";
-    
-    my ($result_TPED, $result_DNF);
-    my $retry_count = 0;
+	my ($plink_file_prefix, $ld_prune_flag, $out_tped_fh, $out_dnf_fh, $keep_negative) = @_;
+	
+	my $ld_file_suffix = ($ld_prune_flag == 1) ? "rmLD" : "rmLD.prune";
+	
+	my ($result_TPED, $result_DNF);
+	my $retry_count = 0;
 
-    while ($retry_count < $max_retries) {
-        ($result_TPED, $result_DNF) = function_process_Garfield("$plink_file_prefix.$ld_file_suffix", "$plink_file_prefix.trait", "$out_tped_fh", "$keep_negative");
-        $result_TPED =~ s/1\.5 1\.5/0 0/g if $result_TPED =~ /1\.5/;
-        last if defined $result_TPED;
-        $retry_count++;
-    }
+	while ($retry_count < $max_retries) {
+		($result_TPED, $result_DNF) = function_process_Garfield("$plink_file_prefix.$ld_file_suffix", "$plink_file_prefix.trait", "$out_tped_fh", "$keep_negative");
+		$result_TPED =~ s/1\.5 1\.5/0 0/g if $result_TPED =~ /1\.5/;
+		last if defined $result_TPED;
+		$retry_count++;
+	}
 
 	if (defined $result_DNF) {
 		flock($out_dnf_fh, LOCK_EX);
