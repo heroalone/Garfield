@@ -36,10 +36,10 @@ Check by `which perl`, `which R`, and `which plink`, and the specific paths shou
 ```bash
 git clone git@github.com:heroalone/Garfield.git
 cd Garfield
-perl INSTALL.pl
+perl INSTALL.pl; source ~/.bashrc
 ```
 
-Check `which Garfield` to see the current path should be returned; otherwise, run below manually:
+Type `which Garfield` and the path should be returned; otherwise, run below manually:
 ```bash
 currentdir=$(pwd)
 export PERL5LIB="$PERL5LIB:$currentdir/lib" >> ~/.bashrc;
