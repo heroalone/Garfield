@@ -154,7 +154,7 @@ Garfield_main <- function(PLINKFILE, TRAITFILE, FILENAME2) {
 					OUT_DNF <- write_bestDNF(CHR, FILENAME2, sig_logic_exp)
 				}
 				
-				if (nrow(vim.result)> 1) {
+				# if (nrow(vim.result)> 1) {
 					merged_data <- merge(phenotype, predicted_genotype, by = "id", sort = FALSE, row.names = phenotype$id, all = TRUE)
 					merged_data <- merged_data[match(phenotype$id, merged_data$id), ]
 					merged_data$predict <- as.numeric(merged_data$predict)
@@ -163,7 +163,7 @@ Garfield_main <- function(PLINKFILE, TRAITFILE, FILENAME2) {
 					}
 					
 					OUT_TPED <- write_TPED(CHR, FILENAME2, merged_data$predict + 1)
-				}
+				# }
 			}
 		}
 	}
