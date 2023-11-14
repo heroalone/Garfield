@@ -55,7 +55,7 @@ sub check_para_sub {
 	my $exit_code = 0;
 
 	if (!$opts_sub->{"bed"}) {
-		print "Please provide --bed file!\n";
+		print "Please provide --bed|-b file!\n";
 		$exit_code++;
 	} else {
 		if (!-e $opts_sub->{"bed"}) {
@@ -63,6 +63,12 @@ sub check_para_sub {
 			$exit_code++;
 		}
 		$opts_sub->{"bed"} = abs_path $opts_sub->{"bed"};
+	}
+
+
+	if (!$opts_sub->{"extension"}) {
+		print "Please provide --extension|-e inter!\n";
+		$exit_code++;
 	}
 
 
@@ -150,7 +156,7 @@ sub RUN_Gene {
 					print $out_dnf_fh "$result_DNF\n";
 				flock($out_dnf_fh, LOCK_UN);
 				
-				if (defined $out_tped_fh && (not $out_tped_fh=~/NULL/ig)) {
+				if (defined $out_tped_fh && (not $result_TPED=~/NULL/ig) && ($result_DNF=~/[\&|\|]/ig)) {
 					flock($out_tped_fh, LOCK_EX);
 						print $out_tped_fh "$result_TPED\n";
 					flock($out_tped_fh, LOCK_UN);

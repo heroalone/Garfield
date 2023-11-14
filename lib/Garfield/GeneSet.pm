@@ -194,7 +194,7 @@ sub RUN_GeneSet{
 					print $out_dnf_fh "$result_DNF\n";
 				flock($out_dnf_fh, LOCK_UN);
 				
-				if (defined $out_tped_fh && (not $out_tped_fh=~/NULL/ig)) {
+				if (defined $out_tped_fh && (not $result_TPED=~/NULL/ig) && ($result_DNF=~/[\&|\|]/ig)) {
 					flock($out_tped_fh, LOCK_EX);
 						print $out_tped_fh "$result_TPED\n";
 					flock($out_tped_fh, LOCK_UN);
