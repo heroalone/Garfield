@@ -86,7 +86,7 @@ sub check_para_sub {
 	} else {
 		# return "TRUE";
 		print "Genome is: $opts_sub->{genome}\n";
-		print "Sliding window: $opts_sub->{window} bp and step size :$opts_sub->{step} bp\n";
+		print "Sliding window: $opts_sub->{window} bp and step size: $opts_sub->{step} bp\n";
 		print "\#threads will be used: $opts_sub->{'threads'}\n";
 		RUN_Window($class, $opts_sub);
 	}
