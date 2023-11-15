@@ -234,7 +234,7 @@ sub process_Ghost_Detail {
 
 	while ($retry_count < $max_retries) {
 		($result_TPED, $result_DNF) = function_process_Garfield("$plink_file_prefix.$ld_file_suffix", "$plink_file_prefix.trait", "$plinkname", "$keep_negative");
-		last if defined $result_TPED;
+		last unless defined $result_TPED;
 		last unless $result_TPED=~/[012]/;
 		$result_TPED =~ s/1\.5 1\.5/0 0/g if $result_TPED =~/1\.5/;
 		$retry_count++;
