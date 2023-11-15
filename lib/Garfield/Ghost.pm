@@ -234,22 +234,28 @@ sub process_Ghost_Detail {
 
 	while ($retry_count < $max_retries) {
 		($result_TPED, $result_DNF) = function_process_Garfield("$plink_file_prefix.$ld_file_suffix", "$plink_file_prefix.trait", "$plinkname", "$keep_negative");
-		last unless defined $result_TPED;
-		last unless $result_TPED=~/[012]/;
-		$result_TPED =~ s/1\.5 1\.5/0 0/g if $result_TPED =~/1\.5/;
+		last if defined $result_TPED;
+		#last unless $result_TPED=~/[1|2]/;
 		$retry_count++;
 	}
 	
-	my @tmp_is_tped=split("\ ",$result_DNF);
-	if (defined $result_DNF && (not $result_DNF=~/NULL/ig) && @tmp_is_tped<5) {
-		flock($out_dnf_fh, LOCK_EX);
-			print $out_dnf_fh "$result_DNF\n";
-		flock($out_dnf_fh, LOCK_UN);
-		
-		if (defined $out_tped_fh && (not $result_TPED=~/NULL/ig) && ($result_DNF=~/[\&|\|]/ig)) {
-			flock($out_tped_fh, LOCK_EX);
-				print $out_tped_fh "$result_TPED\n";
-			flock($out_tped_fh, LOCK_UN);
+	
+	if (defined $result_DNF && (not $result_DNF=~/NULL/ig)) {
+		my @tmp_is_tped=split("\ ",$result_DNF);
+		if (@tmp_is_tped<10){
+			flock($out_dnf_fh, LOCK_EX);
+				print $out_dnf_fh "$result_DNF\n";
+			flock($out_dnf_fh, LOCK_UN);
+			
+			if (defined $out_tped_fh && (not $result_TPED=~/NULL/ig) && ($result_DNF=~/[\&|\|]/ig)) {
+				$result_TPED =~ s/1\.5 1\.5/0 0/g if $result_TPED =~/1\.5/;
+				flock($out_tped_fh, LOCK_EX);
+					print $out_tped_fh "$result_TPED\n";
+				flock($out_tped_fh, LOCK_UN);
+			}
+		}
+		else{
+			warn "Error processing: $plink_file_prefix\n";
 		}
 	}
 	else {
