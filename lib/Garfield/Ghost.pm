@@ -195,11 +195,10 @@ sub RUN_Ghost {
 			system("cut -d ' ' -f 1,2,7 ${plinkfile}.peak.raw | sed '1d' > ${plinkfile}.trait");
 
 			if ($LD_prune < 1 && -e "$plinkfile.rmLD.prune.bim") {
-				process_Ghost_Detail("$plinkfile", 0, $out_tped_fh, $out_dnf_fh, $keep_negative);
+				process_Ghost_Detail("$plinkfile", 0, $plinkname, $out_tped_fh, $out_dnf_fh, $keep_negative);
 			}
-
-			if ($LD_prune == 1 && -e "$plinkfile.rmLD.bim") {
-				process_Ghost_Detail("$plinkfile", 1, $out_tped_fh, $out_dnf_fh, $keep_negative);
+			elsif ($LD_prune == 1 && -e "$plinkfile.rmLD.bim") {
+				process_Ghost_Detail("$plinkfile", 1, $plinkname, $out_tped_fh, $out_dnf_fh, $keep_negative);
 			}
 
 		}
@@ -226,7 +225,7 @@ sub function_process_Garfield {
 
 # Common processing for each case
 sub process_Ghost_Detail {
-	my ($plink_file_prefix, $ld_prune_flag, $out_tped_fh, $out_dnf_fh, $keep_negative) = @_;
+	my ($plink_file_prefix, $ld_prune_flag, $plinkname, $out_tped_fh, $out_dnf_fh, $keep_negative) = @_;
 	
 	my $ld_file_suffix = ($ld_prune_flag == 1) ? "rmLD" : "rmLD.prune";
 	
@@ -234,13 +233,15 @@ sub process_Ghost_Detail {
 	my $retry_count = 0;
 
 	while ($retry_count < $max_retries) {
-		($result_TPED, $result_DNF) = function_process_Garfield("$plink_file_prefix.$ld_file_suffix", "$plink_file_prefix.trait", "$out_tped_fh", "$keep_negative");
-		$result_TPED =~ s/1\.5 1\.5/0 0/g if $result_TPED =~ /1\.5/;
+		($result_TPED, $result_DNF) = function_process_Garfield("$plink_file_prefix.$ld_file_suffix", "$plink_file_prefix.trait", "$plinkname", "$keep_negative");
 		last if defined $result_TPED;
+		last unless $result_TPED=~/[012]/;
+		$result_TPED =~ s/1\.5 1\.5/0 0/g if $result_TPED =~/1\.5/;
 		$retry_count++;
 	}
-
-	if (defined $result_DNF) {
+	
+	my @tmp_is_tped=split("\ ",$result_DNF);
+	if (defined $result_DNF && (not $result_DNF=~/NULL/ig) && @tmp_is_tped<5) {
 		flock($out_dnf_fh, LOCK_EX);
 			print $out_dnf_fh "$result_DNF\n";
 		flock($out_dnf_fh, LOCK_UN);
