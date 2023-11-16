@@ -25,7 +25,7 @@ my %option_subcmd;
 my $getOpts = &read_option();
 
 my $status = 0;
-my $VERSION = "v0.1";
+my $VERSION = "v1.0";
 if ($option{version}) {
 	print "Current version: $VERSION\n";
 	exit 0;
