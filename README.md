@@ -206,7 +206,7 @@ Garfield Ghost --genotype ./example/test.human1000 \
 --INDpeak ./example/test.peak.list \
 --extension 100000 \
 --rmLD2peak 0.3 \
---LDprune_rsq 1 \
+--LDprune_rsq 0.9 \
 --outdir output.gwas \
 --temporary tmp.gwas \
 --prefix test_SA \
