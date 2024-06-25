@@ -247,7 +247,7 @@ emmax -t BASE_of_tped \
 ---
 
 ## How to cite <a name="cite"></a>
-A paper describing the current study is under preparation.
+Hai-Jun Liu, Kelly Swarts, Shuhua Xu, Jianbing Yan, Magnus Nordborg. On the contribution of genetic heterogeneity to complex traits. bioRxiv 2024.03.27.586967; doi: https://doi.org/10.1101/2024.03.27.586967
 
 ## Warranty and License <a name="license"></a>
 Please acknowledge and agree that the software is provided **`AS IS`**  without warranty.
