@@ -32,6 +32,24 @@ Conventional genetic association analysis often assumes a single causal factor u
 Before installation, make sure Perl, R, and [Plink, v1.9](https://www.cog-genomics.org/plink/) have been already installed and added to $PATH.
 Check by `which perl`, `which R`, and `which plink`, and the specific paths should be correctly returned.
 
+
+#### Now you can run much more easily with Docker! [Thanks @wenjiewei9908]
+```bash
+docker pull wenjiewei9908/garfield:1.0
+```
+And test as
+```
+docker run -it garfield Gene --genotype ./example/test.genotype \
+--trait ./example/test.trait.txt \
+--bed ./example/test.geneAnno.bed \
+--extension 20000 \
+--outdir ./test \
+--temporary ./tmp \
+--prefix test \
+--threads 1
+```
+
+
 #### Download and install locally
 ```bash
 git clone git@github.com:heroalone/Garfield.git
