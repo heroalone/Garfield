@@ -50,7 +50,7 @@ docker run -it garfield Gene --genotype ./example/test.genotype \
 ```
 
 
-#### Download and install locally
+#### Or you could also download and install locally
 ```bash
 git clone git@github.com:heroalone/Garfield.git
 cd Garfield
