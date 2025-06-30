@@ -120,7 +120,8 @@ It is highly recommended to remove all missing phenotypes in advance and it is n
 
 
 ####  Genotype [--genotype|-g \<file\>]
-The genotype should be in [PLINK binary format](https://www.cog-genomics.org/plink/1.9/formats#bed): `file.bed`, `file.bim` and `file.fam`. You can easily convert other formats into it, for example from VCF:
+The genotype should be in [PLINK binary format](https://www.cog-genomics.org/plink/1.9/formats#bed): `file.bed`, `file.bim` and `file.fam`. Please try to avoid using `:`, as it can cause issues during regression or logic analysis.
+You can easily convert other formats into the plink, for example from VCF:
 
 ```bash
 plink --vcf input.vcf.gz \
@@ -291,9 +292,9 @@ Support the project by telling others, and consider citing our upcoming paper or
 
 ## Q & A <a name="Q_A"></a>
 
-- I'm sure all the perl modules are installed sucessfully, but still got `Can't locate *.pm in @INC` error.
+- Q: I'm sure all the perl modules are installed sucessfully, but still got `Can't locate *.pm in @INC` error.
 
-  We tried to add the module PATH into your system, obvioursly it's failed, please try to:
+  A: We tried to add the module PATH into your system, obvioursly it's failed, please try to:
   1) add `use lib '/path/to/your/module/directory';` into Garfield file under `use strict;`;
   2) add the path into @INC with `echo 'export PERL5LIB=$PERL5LIB:/path/to/Garfield/lib' >> ~/.bashrc` and `source ~/.bashrc `;
   3) or simply to run it by specifying the library path with `-I` parameter, try: ```perl -I /path/to/Garfield/lib /path/to/Garfield/Garfiled Gene -h ```
