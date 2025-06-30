@@ -120,7 +120,7 @@ It is highly recommended to remove all missing phenotypes in advance and it is n
 
 
 ####  Genotype [--genotype|-g \<file\>]
-The genotype should be in [PLINK binary format](https://www.cog-genomics.org/plink/1.9/formats#bed): `file.bed`, `file.bim` and `file.fam`. Please try to avoid using `:`, as it can cause issues during regression or logic analysis.
+The genotype should be in [PLINK binary format](https://www.cog-genomics.org/plink/1.9/formats#bed): `file.bed`, `file.bim` and `file.fam`. `Please try to avoid using ":" in your variant ID, as it can cause issues during regression or logic analysis`.
 You can easily convert other formats into the plink, for example from VCF:
 
 ```bash
